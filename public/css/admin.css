@@ -1,0 +1,329 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --main-color: rgb(74, 111, 165);
+    --accent-color: rgb(125, 209, 223);
+    --secondary-color: rgb(181, 229, 231);
+}
+
+.drop-border {
+    border: 0px;
+    background-color: transparent;
+}
+
+body {
+    background-color: #e8e8e8;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    background-color: var(--main-color);
+}
+
+.btn-primary {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+    box-shadow: 0 2px 5px rgba(25, 25, 25, 0.4);
+}
+
+.btn-secondary,
+.btn-success,
+.btn-danger {
+    box-shadow: 0 2px 5px rgba(25, 25, 25, 0.4);
+}
+
+.alert-dismissible.fade {
+    transition: opacity 0.5s ease-in-out;
+}
+
+.table,
+.form-control,
+.form-select,
+.modal {
+    box-shadow: 0 2px 5px rgba(25, 25, 25, 0.2);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+}
+
+.pagination .page-link {
+    color: var(--main-color);
+}
+
+.text-primary {
+    color: var(--main-color) !important;
+}
+
+.review_actions .approve-action.dropdown-item:hover,
+.approve-action.dropdown-item:focus {
+    color: var(--main-color) !important;
+    background-color: #e2e3e500 !important;
+}
+
+.review_actions .reject-action.dropdown-item:hover,
+.reject-action.dropdown-item:focus {
+    color: #b51c3b !important;
+    background-color: #e2e3e500 !important;
+}
+
+.review_actions .delete-action.dropdown-item:hover,
+.delete-action.dropdown-item:focus {
+    color: #030405 !important;
+    background-color: #e2e3e500 !important;
+}
+
+#spinner {
+    position: fixed;
+    top: 30%;
+    left: calc(50% + 140px);
+    transform: translate(-50%, -50%);
+}
+
+.card3d {
+    width: 180px;
+    height: 220px;
+    border-radius: 15px;
+    background: #e0e0e0;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset,
+        rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
+    transition: 0.2s ease-in-out;
+}
+
+.card3d:hover {
+    transform: scale(1.02);
+    background: lightgrey;
+    box-shadow: 15px 15px 30px #bebebe, -15px -15px 30px #ffffff;
+    transition: 0.2s ease-in-out;
+}
+
+.card-text + small {
+    display: block;
+    margin-top: 0.5rem;
+    color: #6c757d; /* Light gray */
+}
+
+.card3d .text-muted {
+    font-size: 0.875rem; /* Slightly smaller font for sub-statistics */
+    margin-top: 0.5rem;
+}
+
+.card3d .text-muted i {
+    margin-right: 5px; /* Add spacing between icons and text */
+}
+
+.sidebar {
+    box-shadow: 5px 5px 10px rgba(25, 25, 25, 0.279);
+}
+
+.homepage_cards {
+    color: black;
+    text-decoration: none;
+}
+
+/* Custom styles for responsive sidebar */
+body {
+    overflow-x: hidden; /* Prevent horizontal scroll on the body */
+}
+
+#sidebar {
+    width: 280px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s;
+    background-color: #212529;
+}
+
+#content {
+    margin-left: 280px;
+    transition: all 0.3s;
+    padding: 20px;
+    width: calc(
+        100% - 280px
+    ); /* Ensure content width is calculated correctly */
+    min-height: 100vh;
+}
+
+#sidebarCollapse {
+    display: none;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1001;
+    background-color: var(--main-color);
+    border: none;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 50px -12px inset,
+        rgba(0, 0, 0, 0.3) 0px 18px 26px -18px inset;
+}
+
+/* Table container with horizontal scroll when needed */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+/* Ensure tables don't exceed their container */
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    table-layout: auto;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -280px;
+    }
+
+    #content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    #sidebarCollapse {
+        display: block;
+    }
+
+    #sidebar.active {
+        margin-left: 0;
+    }
+
+    #spinner {
+        left: calc(50%);
+    }
+    /* Apply smaller font size to table on mobile */
+    .table {
+        font-size: 0.85rem;
+    }
+
+    /* Make certain columns hidden or smaller on mobile */
+    .table .mobile-hide {
+        display: none;
+    }
+
+    .table .mobile-small {
+        width: 60px;
+        max-width: 60px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.dashboard_tiles a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    justify-content: center; 
+    flex-wrap: wrap; 
+
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: var(--main-color);
+    border-radius: 50%;
+    padding: 10px;
+}
+
+.chart:hover {
+    transform: scale(1);
+}
+
+h3 {
+    cursor: default;
+    user-select: none;
+    width: fit-content;
+    border-bottom: 2px solid rgba(50, 50, 93, 0.25);
+    padding-bottom: 10px;
+    transition: ease-in-out 0.5s;
+}
+
+h3:hover {
+    border-bottom: 2px solid rgba(81, 141, 209, 0.433);
+    transition: ease-in-out 0.5s;
+}
+
+.form-check-input:checked {
+    background-color: var(--main-color);
+    border-color: var(--main-color);
+}
+
+/* From Uiverse.io by eslam-hany */
+.loader {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    box-shadow: rgba(74, 111, 165, 0.4) 0px 2px 4px,
+        rgba(74, 111, 165, 0.3) 0px 7px 13px -3px,
+        rgba(74, 111, 165, 0.2) 0px -3px 0px inset;
+    animation: rotate 2s infinite linear;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
+.buttonUI {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    background-image: linear-gradient(
+        to top,
+        #d8d9db 0%,
+        #e8e8e8 80%,
+        #fdfdfd 100%
+    );
+    border-radius: 30px;
+    border: 1px solid #8f9092;
+    transition: all 0.2s ease;
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #606060;
+    text-shadow: 0 1px #fff;
+}
+.buttonUI:hover {
+    box-shadow: 0 4px 3px 1px #fcfcfc, 0 6px 8px #d6d7d9, 0 -4px 4px #cecfd1,
+        0 -6px 4px #fefefe, inset 0 0 3px 3px #cecfd1;
+}
+.buttonUI:active {
+    box-shadow: 0 4px 3px 1px #fcfcfc, 0 6px 8px #d6d7d9, 0 -4px 4px #cecfd1,
+        0 -6px 4px #fefefe, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+}
+
+.buttonUI:focus {
+    box-shadow: 0 4px 3px 1px #fcfcfc, 0 6px 8px #d6d7d9, 0 -4px 4px #cecfd1,
+        0 -6px 4px #fefefe, inset 0 0 5px 3px #999, inset 0 0 30px #aaa;
+}
+
+.accordion-item {
+    background: transparent !important; /* ✅ Removes background */
+    border: none; /* ✅ Removes border if needed */
+}
+
+.accordion-button {
+    background: transparent !important; /* ✅ Ensures the button matches */
+    color: inherit; /* ✅ Keeps default text color */
+}
+
+.accordion-body {
+    background: transparent !important; 
+    
+}
