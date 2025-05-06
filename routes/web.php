@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\HomeController;
+use App\Http\Controllers\User\ShopController;
+use App\Http\Controllers\User\ProductController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AdminChartsController;
@@ -11,13 +14,11 @@ use App\Http\Controllers\Admin\AdminReviewsController;
 use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/',[HomeController::class, 'index'])->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// User Shop Routes
+Route::get('/shop', [ShopController::class, 'index'])->name('shop');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('product.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

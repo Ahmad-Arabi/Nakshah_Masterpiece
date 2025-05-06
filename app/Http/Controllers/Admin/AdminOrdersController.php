@@ -103,6 +103,9 @@ class AdminOrdersController extends Controller
             'phone_number' => 'required|string|max:15',
             'order_items' => 'required|array',
             'order_items.*.selected_size' => 'required|string',
+            'order_items.*.custom_image'=> 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'order_items.*.custom_text'=> 'nullable|string|max:255',
+            'order_items.*.custom_text_color'=> 'nullable|string|max:255',
         ]);
     
         $order = Order::findOrFail($id);
@@ -135,7 +138,33 @@ class AdminOrdersController extends Controller
     
                 $orderItem->update(['selected_size' => $newSize]);
             }
+
+            if (isset($itemData['custom_image'])) {
+                $oldImage = $orderItem->custom_image;
+                $newImage = $itemData['custom_image'] ?? null;
+                if ( $newImage !== $oldImage) {
+                    $imagePath = $itemData['custom_image']->store('order_items', 'public');
+                    $orderItem->update(['custom_image' => $imagePath]);
+                }
+            }
+            
+            if ($orderItem->custom_text !== null) {
+                $oldText = $orderItem->custom_text;
+                $newText = $itemData['custom_text'] ?? null;
+                if ($newText !== $oldText) {
+                    $orderItem->update(['custom_text' => $newText]);
+                }
+            }
+
+            if ($orderItem->custom_text_color !== null) {
+                $oldTextColor = $orderItem->custom_text_color;
+                $newTextColor = $itemData['custom_text_color'] ?? null;
+                if ($newTextColor !== $oldTextColor) {
+                    $orderItem->update(['custom_text_color' => $newTextColor]);
+                }
+            }
         }
+        
     
         return redirect()->back()->with('success', 'Order updated successfully!');
     }

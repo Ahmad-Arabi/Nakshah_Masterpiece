@@ -1,5 +1,12 @@
 <x-app-layout>
-    <div class="container py-4">
+    <style>
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+    </style>
+    <div class="container mt-5">
         <div class="card shadow">
             <div class="card-header bg-white">
                 <h4 class="mb-0">{{ __('Profile Settings') }}</h4>
