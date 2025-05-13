@@ -2,9 +2,19 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('home') }}"><h2>نقشة <em>Nakshah</em></h2></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="d-flex align-items-center d-lg-none">
+                @auth
+                <a href="{{ route('cart.index') }}" class="cart-icon-mobile">
+                    <i class="fa fa-shopping-cart"></i>
+                    @if(Cookie::has('cart') && count(json_decode(Cookie::get('cart', '[]'), true)) > 0)
+                        <span class="cart-count">{{ count(json_decode(Cookie::get('cart', '[]'), true)) }}</span>
+                    @endif
+                </a>
+                @endauth
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <!-- Main Navigation Items -->
                 <ul class="navbar-nav ml-auto">
@@ -15,16 +25,16 @@
                             @endif
                         </a>
                     </li> 
-                    <li class="nav-item {{ request()->routeIs('products') ? 'active' : '' }}">
+                    <li class="nav-item {{ request()->routeIs('shop') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('shop') }}">Shop</a>
                     </li>
                     <li class="nav-item {{ request()->routeIs('about') ? 'active' : '' }}">
-                        <a class="nav-link" href="">About Us</a>
+                        <a class="nav-link" href="{{ route('about') }}">About Us</a>
                     </li>
-                    <li class="nav-item {{ request()->routeIs('contact') ? 'active' : '' }}">
-                        <a class="nav-link" href="">Contact Us</a>
+                    <li class="nav-item {{ request()->routeIs('user.contactUs') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('user.contactUs') }}">Contact Us</a>
                     </li>
-                    
+
                     <!-- Mobile-only navigation items for authenticated users -->
                     @if (Auth::check())
                         @if (Auth::user()->isAdmin || Auth::user()->role === 'admin')
@@ -63,6 +73,14 @@
                 <!-- Authentication Links - Separate Section -->
                 <div class="auth-section ms-4">
                     @if (Auth::check())
+                        @auth
+                        <a href="{{ route('cart.index') }}" class="cart-icon-nav me-3 mr-4">
+                            <i class="fa fa-shopping-cart"></i>
+                            @if(Cookie::has('cart') && count(json_decode(Cookie::get('cart', '[]'), true)) > 0)
+                                <span class="cart-count">{{ count(json_decode(Cookie::get('cart', '[]'), true)) }}</span>
+                            @endif
+                        </a>
+                        @endauth
                         <div class="dropdown" x-data="{ open: false }">
                             <button @click="open = !open" class="dropdown-btn">
                                 <div class="user-info">

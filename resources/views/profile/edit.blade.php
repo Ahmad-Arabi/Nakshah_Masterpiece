@@ -5,8 +5,54 @@
             top: 0;
             z-index: 1000;
         }
+        
+        .profile-page .card {
+            background-color: var(--transparent-light);
+            border: none;
+        }
+        
+        .profile-page .nav-link {
+            transition: all 0.3s ease;
+        }
+        
+        .profile-page .nav-link.active {
+            background-color: var(--accent) !important;
+            color: white !important;
+        }
+        
+        .profile-page .nav-link:not(.active) {
+            background-color: transparent;
+            color: var(--primary) !important;
+        }
+        
+        .profile-page .nav-link:not(.active):hover {
+            background-color: rgba(75, 63, 114, 0.1);
+        }
+        
+        .profile-page .btn-primary {
+            background-color: var(--accent);
+            border-color: var(--accent);
+        }
+        
+        .profile-page .btn-primary:hover,
+        .profile-page .btn-primary:focus,
+        .profile-page .btn-primary:active {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .profile-page .order-item {
+            border-left: 4px solid var(--accent);
+            background-color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-page .order-item:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
     </style>
-    <div class="container mt-5">
+    
+    <div class="container mt-5 mb-5 profile-page">
         <div class="card shadow">
             <div class="card-header bg-white">
                 <h4 class="mb-0">{{ __('Profile Settings') }}</h4>
@@ -17,26 +63,26 @@
                     <div class="col-md-3 col-lg-2 mb-4 mb-md-0">
                         <div class="text-center mb-3">
                             <!-- Profile Picture - Smaller Size -->
-                            <div class="mx-auto mb-3" style="width: 100px; height: 100px;">
+                            <div class="mx-auto mb-3  nav-color-change" style="width: 100px; height: 100px;">
                                 <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('images/default.png') }}"
                                      alt="{{ $user->name }}" class="rounded-circle img-fluid border"
-                                     style="width: 100px; height: 100px; object-fit: cover; border-color: #4B3F72 !important; border-width: 3px !important;">
+                                     style="width: 100px; height: 100px; object-fit: cover; border-color: var(--accent) !important; border-width: 3px !important;">
                             </div>
                             
                             <!-- User Name -->
-                            <h5 class="fw-bold" style="color: #333333;">{{ $user->name }}</h5>
+                            <h5 class="fw-bold" style="color: var(--primary);">{{ $user->name }}</h5>
                             
                             <!-- User Email -->
                             <p class="text-muted small">{{ $user->email }}</p>
                         </div>
                         
-                        <!-- Navigation Tabs -->
+                        <!-- Navigation Tabs - Changed order to show Order History first -->
                         <div class="nav flex-column nav-pills">
-                            <button id="edit-profile-tab" class="nav-link active text-start mb-2" style="background-color: #4B3F72;">
-                                <i class="fas fa-user-edit me-2"></i> Edit Profile
-                            </button>
-                            <button id="order-history-tab" class="nav-link text-start" style="color: #333333; background-color: #F5F0E1;">
+                            <button id="order-history-tab" class="nav-link active text-start mb-2">
                                 <i class="fas fa-shopping-bag me-2"></i> Order History
+                            </button>
+                            <button id="edit-profile-tab" class="nav-link text-start">
+                                <i class="fas fa-user-edit me-2"></i> Edit Profile
                             </button>
                         </div>
                     </div>
@@ -44,8 +90,60 @@
                     <!-- Content Area - Right Column -->
                     <div class="col-md-9 col-lg-10">
                         <div class="border-start ps-md-4">
-                            <!-- Edit Profile Section -->
-                            <div id="edit-profile-content">
+                            <!-- Order History Section - Now visible by default -->
+                            <div id="order-history-content">
+                                <h5 class="mb-4" style="color: var(--primary);">{{ __('Order History') }}</h5>
+                                
+                                @if($user->orders && $user->orders->count() > 0)
+                                    <div class="order-list">
+                                        @foreach($user->orders as $order)
+                                            <div class="card mb-3 order-item" data-order-id="{{ $order->id }}" 
+                                                style="cursor: pointer;">
+                                                <div class="card-body">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <div>
+                                                            <h6 class="mb-1">Order #{{ $order->id }}</h6>
+                                                            <p class="text-muted small mb-0">{{ $order->created_at->format('M d, Y') }}</p>
+                                                        </div>
+                                                        <div class="text-end">
+                                                            <p class="fw-bold mb-1">{{ number_format($order->total_price, 2) }} JOD</p>
+                                                            <span class="badge rounded-pill 
+                                                            {{ $order->status === 'completed' ? 'bg-success' : 
+                                                             ($order->status === 'processing' ? 'bg-primary' : 'bg-warning') }}">
+                                                                {{ ucfirst($order->status) }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+
+                                    <!-- Order Details Modal -->
+                                    <div class="modal fade" id="order-details-modal" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" style="color: var(--primary);">Order Details</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div id="order-details-content"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="text-center p-5" style="background-color: rgba(245, 240, 225, 0.5); border-radius: 8px;">
+                                        <i class="fas fa-shopping-bag fa-3x mb-3" style="color: var(--primary);"></i>
+                                        <h6>No orders yet</h6>
+                                        <p class="text-muted small">Start shopping to see your orders here.</p>
+                                    </div>
+                                @endif
+                            </div>
+                            
+                            <!-- Edit Profile Section - Now hidden by default -->
+                            <div id="edit-profile-content" class="d-none">
                                 <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                                     @csrf
                                     @method('patch')
@@ -75,7 +173,7 @@
                                             <div class="col-12">
                                                 <div class="alert alert-warning small">
                                                     {{ __('Your email address is unverified.') }}
-                                                    <button form="send-verification" class="btn btn-link p-0 m-0 align-baseline text-decoration-none" style="color: #FF6B6B;">
+                                                    <button form="send-verification" class="btn btn-link p-0 m-0 align-baseline text-decoration-none" style="color: var(--accent);">
                                                         {{ __('Click here to re-send the verification email.') }}
                                                     </button>
                                                 </div>
@@ -97,12 +195,12 @@
                                             @enderror
                                         </div>
 
-                                        <!-- City Field -->
+                                        <!-- Address Field -->
                                         <div class="col-md-6">
-                                            <label for="city" class="form-label">{{ __('City') }}</label>
-                                            <input id="city" name="city" type="text" class="form-control" 
-                                                value="{{ old('city', $user->city) }}" autocomplete="address-level2">
-                                            @error('city')
+                                            <label for="address" class="form-label">{{ __('Address') }}</label>
+                                            <input id="address" name="address" type="text" class="form-control" 
+                                                value="{{ old('address', $user->address) }}" autocomplete="address-level2">
+                                            @error('address')
                                                 <div class="text-danger small mt-1">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -120,7 +218,7 @@
 
                                     <!-- Password Section -->
                                     <div class="mt-4 pt-4 border-top">
-                                        <h5 class="mb-3" style="color: #4B3F72;">{{ __('Update Password') }}</h5>
+                                        <h5 class="mb-3" style="color: var(--primary);">{{ __('Update Password') }}</h5>
                                         <p class="text-muted small mb-3">{{ __('Leave password fields empty if you don\'t want to change it.') }}</p>
 
                                         <div class="row g-3">
@@ -155,7 +253,7 @@
 
                                     <!-- Save Button -->
                                     <div class="d-flex justify-content-end mt-4">
-                                        <button type="submit" class="btn btn-primary" style="background-color: #FF6B6B; border-color: #FF6B6B;">
+                                        <button type="submit" class="btn btn-primary">
                                             {{ __('Save Changes') }}
                                         </button>
 
@@ -167,66 +265,14 @@
 
                                 <!-- Delete Account Section -->
                                 <div class="mt-5 pt-4 border-top">
-                                    <h5 class="mb-3" style="color: #FF6B6B;">{{ __('Delete Account') }}</h5>
+                                    <h5 class="mb-3" style="color: var(--accent);">{{ __('Delete Account') }}</h5>
                                     <p class="text-muted small">{{ __('Once your account is deleted, all of its resources and data will be permanently deleted.') }}</p>
 
                                     <button type="button" data-bs-toggle="modal" data-bs-target="#confirm-delete-modal"
-                                        class="btn btn-danger" style="background-color: #FF6B6B; border-color: #FF6B6B;">
+                                        class="btn btn-danger" style="background-color: var(--accent); border-color: var(--accent);">
                                         {{ __('Delete Account') }}
                                     </button>
                                 </div>
-                            </div>
-                            
-                            <!-- Order History Section -->
-                            <div id="order-history-content" class="d-none">
-                                <h5 class="mb-4" style="color: #4B3F72;">{{ __('Order History') }}</h5>
-                                
-                                @if($user->orders && $user->orders->count() > 0)
-                                    <div class="order-list">
-                                        @foreach($user->orders as $order)
-                                            <div class="card mb-3 order-item" data-order-id="{{ $order->id }}" 
-                                                style="cursor: pointer; border-left: 4px solid #4B3F72; background-color: #F5F0E1;">
-                                                <div class="card-body">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <div>
-                                                            <h6 class="mb-1">Order #{{ $order->id }}</h6>
-                                                            <p class="text-muted small mb-0">{{ $order->created_at->format('M d, Y') }}</p>
-                                                        </div>
-                                                        <div class="text-end">
-                                                            <p class="fw-bold mb-1">{{ number_format($order->total_price, 2) }} JOD</p>
-                                                            <span class="badge rounded-pill 
-                                                            {{ $order->status === 'completed' ? 'bg-success' : 
-                                                             ($order->status === 'processing' ? 'bg-primary' : 'bg-warning') }}">
-                                                                {{ ucfirst($order->status) }}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-
-                                    <!-- Order Details Modal -->
-                                    <div class="modal fade" id="order-details-modal" tabindex="-1" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" style="color: #4B3F72;">Order Details</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div id="order-details-content"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="text-center p-5" style="background-color: #F5F0E1; border-radius: 8px;">
-                                        <i class="fas fa-shopping-bag fa-3x mb-3" style="color: #4B3F72;"></i>
-                                        <h6>No orders yet</h6>
-                                        <p class="text-muted small">Start shopping to see your orders here.</p>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     </div>
@@ -286,22 +332,14 @@
                 editProfileContent.classList.remove('d-none');
                 orderHistoryContent.classList.add('d-none');
                 editProfileTab.classList.add('active');
-                editProfileTab.style.backgroundColor = '#4B3F72';
-                editProfileTab.style.color = 'white';
                 orderHistoryTab.classList.remove('active');
-                orderHistoryTab.style.backgroundColor = '#F5F0E1';
-                orderHistoryTab.style.color = '#333333';
             });
             
             orderHistoryTab.addEventListener('click', function() {
                 editProfileContent.classList.add('d-none');
                 orderHistoryContent.classList.remove('d-none');
                 orderHistoryTab.classList.add('active');
-                orderHistoryTab.style.backgroundColor = '#4B3F72';
-                orderHistoryTab.style.color = 'white';
                 editProfileTab.classList.remove('active');
-                editProfileTab.style.backgroundColor = '#F5F0E1';
-                editProfileTab.style.color = '#333333';
             });
             
             // Order details modal
@@ -348,9 +386,9 @@
                                         <div class="row mt-2">
                                             <div class="col-12 ps-5 ms-4">
                                                 <div class="d-flex align-items-center">
-                                                    <span class="small fw-medium me-2" style="color: #4B3F72;">Custom Text:</span>
+                                                    <span class="small fw-medium me-2" style="color: var(--primary);">Custom Text:</span>
                                                     <span class="small px-2 py-1 rounded" style="
-                                                        background-color: #F5F0E1; 
+                                                        background-color: rgba(245, 240, 225, 0.5); 
                                                         color: ${item.options.custom_text_color || '#000000'};
                                                         border: 1px solid #e5e0d1;
                                                     ">${item.options.custom_text}</span>
@@ -362,7 +400,7 @@
                                         ${hasCustomImage ? `
                                         <div class="row mt-2">
                                             <div class="col-12 ps-5 ms-4">
-                                                <span class="small fw-medium d-block mb-1" style="color: #4B3F72;">Custom Image:</span>
+                                                <span class="small fw-medium d-block mb-1" style="color: var(--primary);">Custom Image:</span>
                                                 <img src="${item.options.custom_image}" alt="Custom Image" 
                                                     class="border rounded" style="height: 60px; object-fit: contain;">
                                             </div>
@@ -373,11 +411,12 @@
                             });
                             
                             // Ensure all monetary values are numbers
-                            const subtotal = parseFloat(data.order.total_price);
-                            const shipping = 5.00;
+                            const subtotal = parseFloat(data.order.subtotal);
+                            const shipping = data.order.shipping_fees;
+
                             const discount = parseFloat(data.order.discount || 0);
                             const total = parseFloat(data.order.total_price);
-                            
+                            console.log(data.order);
                             orderDetailsContent.innerHTML = `
                                 <div class="border-bottom pb-3 mb-3">
                                     <div class="row mb-2">
@@ -386,7 +425,7 @@
                                     </div>
                                     <div class="row mb-1">
                                         <div class="col-6 text-muted small">Status:</div>
-                                        <div class="col-6 text-end fw-medium" style="color: #4B3F72;">${data.order.status}</div>
+                                        <div class="col-6 text-end fw-medium" style="color: var(--primary);">${data.order.status}</div>
                                     </div>
                                     <div class="row">
                                         <div class="col-6 text-muted small">Shipping Address:</div>
@@ -394,7 +433,7 @@
                                     </div>
                                 </div>
                                 
-                                <h6 class="fw-medium mb-3" style="color: #4B3F72;">Items</h6>
+                                <h6 class="fw-medium mb-3" style="color: var(--primary);">Items</h6>
                                 <div class="mb-4">
                                     ${itemsHtml}
                                 </div>
@@ -406,7 +445,7 @@
                                     </div>
                                     <div class="row mb-1">
                                         <div class="col-6 text-muted small">Shipping:</div>
-                                        <div class="col-6 text-end fw-medium">${shipping.toFixed(2)} JOD</div>
+                                        <div class="col-6 text-end fw-medium">${shipping}</div>
                                     </div>
                                     ${discount > 0 ? 
                                     `<div class="row mb-1">
@@ -414,8 +453,8 @@
                                         <div class="col-6 text-end fw-medium text-danger">-${discount.toFixed(2)} JOD</div>
                                     </div>` : ''}
                                     <div class="row border-top pt-2 mt-2">
-                                        <div class="col-6 fw-medium" style="color: #4B3F72;">Total:</div>
-                                        <div class="col-6 text-end fw-medium" style="color: #4B3F72;">${total.toFixed(2)} JOD</div>
+                                        <div class="col-6 fw-medium" style="color: var(--primary);">Total:</div>
+                                        <div class="col-6 text-end fw-medium" style="color: var(--primary);">${total.toFixed(2)} JOD</div>
                                     </div>
                                 </div>
                             `;

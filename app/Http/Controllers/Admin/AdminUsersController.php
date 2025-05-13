@@ -54,7 +54,7 @@ class AdminUsersController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', Rules\Password::defaults()],
             'role' => 'required|in:user,admin',    
-            'city' => 'nullable|string',
+            'address' => 'nullable|string',
             'phone' => 'nullable|string',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -92,7 +92,7 @@ class AdminUsersController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class . ',email,' . $id],
             'password' => ['nullable','confirmed', Rules\Password::defaults()],
             'role' => 'required|in:user,admin', 
-            'city' => 'nullable|string',
+            'address' => 'nullable|string',
             'phone' => 'nullable|string',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',   
         ]);

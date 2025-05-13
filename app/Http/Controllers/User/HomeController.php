@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Category;
+use App\Models\Coupon;
 use App\Models\Product;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -34,7 +35,17 @@ class HomeController extends Controller
             ->take(10)
             ->get();
         Log::info('Active products count: ' . $products->count());
-        
-        return view('userside.home', compact('categories', 'products'));
+
+        $featuredCoupons = Coupon::where('is_featured', 1)->get();
+
+        foreach ($featuredCoupons as $coupon) {
+            if ($coupon->discount_type === 'percentage') {
+                $coupon->discount = $coupon->discount . '%';
+            } else {
+                $coupon->discount =  $coupon->discount . ' JOD';
+            }
+        }
+
+        return view('userside.home', compact('categories', 'products', 'featuredCoupons'));
     }
 }

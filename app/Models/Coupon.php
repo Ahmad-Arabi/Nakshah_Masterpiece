@@ -16,6 +16,7 @@ class Coupon extends Model
         'valid_from',
         'valid_to',
         'is_active',
+        'is_featured',
     ];
 
     public function orders()

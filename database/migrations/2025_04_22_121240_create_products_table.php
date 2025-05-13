@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Category::class)->constrained()->onDelete('cascade');
             $table->string('name');
+            $table->text('description')->nullable();
             $table->string('color');
             $table->decimal('price', 6, 2);
             $table->integer('quantity');

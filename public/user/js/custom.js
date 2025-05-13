@@ -20,18 +20,20 @@ jQuery( document ).ready(function( $ ) {
             }, 300);
         });
         
-
         $(window).scroll(function() {
           var scroll = $(window).scrollTop();
-          var box = $('.header-text').height();
+          var home = $('.nav-color-change').height();
           var header = $('header').height();
 
-          if (scroll >= box - header) {
+        if (scroll >= home - header) {
             $("header").addClass("background-header");
           } else {
             $("header").removeClass("background-header");
           }
+          
         });
+
+    
         if ($('.owl-clients').length) {
             $('.owl-clients').owlCarousel({
                 loop: true,

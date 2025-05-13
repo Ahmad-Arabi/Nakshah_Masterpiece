@@ -39,7 +39,7 @@ class ProfileController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$user->id],
             'phone' => ['nullable', 'string', 'max:20'],
-            'city' => ['nullable', 'string', 'max:100'],
+            'address' => ['nullable', 'string', 'max:100'],
             'profile_picture' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
         ]);
         
@@ -140,15 +140,24 @@ class ProfileController extends Controller
         });
 
         // Format the order data
+
+        if ($order->shipping_fees == 5.00) {
+            $subTotal = $order->total_price - $order->shipping_fees;
+            $shippingFees = "5.00 JOD";
+        } else {
+            $subTotal = $order->total_price;
+            $shippingFees = "Free";
+        }
+
         $orderData = [
             'id' => $order->id,
             'status' => ucfirst($order->status),
             'date' => $order->created_at->format('M d, Y'),
-            'subtotal' => $order->subtotal,
-            'shipping_cost' => $order->shipping_cost,
+            'subtotal' => $subTotal,
             'total_price' => $order->total_price,
             'discount' => $order->discount,
             'delivery_address' => $order->delivery_address,
+            'shipping_fees' => $shippingFees,
         ];
 
         return response()->json([

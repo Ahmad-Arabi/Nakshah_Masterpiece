@@ -17,6 +17,7 @@ class Order extends Model
         'phone_number',
         'coupon_id',
         'discount_applied',
+        'shipping_fees',
     ];
 
     public function user()

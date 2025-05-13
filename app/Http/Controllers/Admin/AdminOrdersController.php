@@ -143,7 +143,7 @@ class AdminOrdersController extends Controller
                 $oldImage = $orderItem->custom_image;
                 $newImage = $itemData['custom_image'] ?? null;
                 if ( $newImage !== $oldImage) {
-                    $imagePath = $itemData['custom_image']->store('order_items', 'public');
+                    $imagePath = $itemData['custom_image']->store('order_images/' . $order->id . '/', 'public');
                     $orderItem->update(['custom_image' => $imagePath]);
                 }
             }

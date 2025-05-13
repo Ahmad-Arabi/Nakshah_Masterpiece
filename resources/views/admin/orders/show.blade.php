@@ -95,6 +95,7 @@
                     <th scope="col">Total Price</th>
                     <th scope="col">Status</th>
                     <th scope="col">Discount</th>
+                    <th scope="col">Shipping Fees</th>
                     <th scope="col">Coupon Code</th>
                 </tr>
             </thead>
@@ -119,6 +120,7 @@
                         </span>
                     </td>
                     <td>{{ number_format($order->discount_applied, 2) }} JOD</td>
+                    <td>{{ $order->shipping_fees == 5.00 ? number_format($order->shipping_fees, 2) . ' JOD' : 'Free' }}</td>
                     <td>{{ $order->coupon ? $order->coupon->code : 'No Coupon' }}</td>
                 </tr>
 

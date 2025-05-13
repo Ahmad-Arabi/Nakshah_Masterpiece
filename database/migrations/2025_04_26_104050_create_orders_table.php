@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('delivery_address'); // New: Store delivery address
             $table->string('phone_number'); // New: Store user’s phone number for contact
             $table->enum('payment_method', ['credit_card', 'cash_on_delivery', 'bank_transfer'])->default('cash_on_delivery'); // New: Store payment method
+            $table->enum('shipping_fees', ['Free', 5.00]);
             $table->timestamps();
         });
         

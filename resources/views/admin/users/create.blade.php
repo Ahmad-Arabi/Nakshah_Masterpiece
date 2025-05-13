@@ -61,9 +61,9 @@
                         <!-- City & Phone -->
                         <div class="col-md-6 col-12">
                             <div class="mb-3">
-                                <label for="city" class="form-label">City</label>
-                                <input type="text" class="form-control" id="city" name="city" placeholder="Enter City"
-                                value="{{ old('city') }}">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Enter Address"
+                                value="{{ old('address') }}">
                             </div>
                         </div>
                         <div class="col-md-6 col-12">

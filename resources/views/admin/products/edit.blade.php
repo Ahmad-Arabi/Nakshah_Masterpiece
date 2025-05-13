@@ -70,6 +70,11 @@
                                     value="{{ $product->price }}">
                             </div>
 
+                            <div class="col-12 col-md-12">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" name="description" rows="2">{{ $product->description }}</textarea>
+                            </div>
+
 
 
 

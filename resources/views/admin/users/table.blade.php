@@ -16,6 +16,7 @@
                     <option value="admin">Admin</option>
                 </select>
             </th>
+            <th scope="col">Adress</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -28,6 +29,7 @@
           <td>{{ $user->name }}</td>
           <td class="d-none d-lg-table-cell">{{ $user->email }}</td>
           <td>{{ ucfirst($user->role) }}</td>
+          <td> {{ $user->address ? $user->address : 'N/A'}}</td>
           <td>
             <div class="dropdown">
               <button class="drop-border buttonUI" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

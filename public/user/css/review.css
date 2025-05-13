@@ -1,0 +1,88 @@
+/* Review Form Styling */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.review-card {
+    border: none;
+    border-radius: 10px;
+}
+
+.title {
+    color: var(--light);
+}
+
+.review-card .card-header {
+    background: linear-gradient(45deg, #ec3c76, #ff6a88);
+    color: white;
+    border-radius: 10px 10px 0 0;
+    padding: 15px 20px;
+}
+
+.review-form .form-control:focus {
+    border-color: #ec3c76;
+    box-shadow: 0 0 0 0.2rem rgba(236, 60, 118, 0.25);
+}
+
+/* Star Rating Styling */
+.star-rating {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+}
+
+.rating-group {
+    display: inline-flex;
+}
+
+.rating__input {
+    position: absolute !important;
+    left: -9999px !important;
+}
+
+.rating__label {
+    margin: 0;
+    padding: 0 3px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.rating__icon--star {
+    color: #fc0;
+}
+
+.rating__input:checked ~ .rating__label .rating__icon--star {
+    color: rgb(131, 130, 130);
+}
+
+.rating__input:hover ~ .rating__label .rating__icon--star {
+    color: #ddd;
+}
+
+.rating__input:hover .rating__label .rating__icon--star {
+    color: #ddd;
+}
+
+/* Product preview in review form */
+.product-preview {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #ec3c76, #ff6a88);
+    border: none;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #d23569, #e75f7d);
+}
+
+.btn-outline-secondary:hover {
+    color: #fff;
+    background-color: #6c757d;
+}

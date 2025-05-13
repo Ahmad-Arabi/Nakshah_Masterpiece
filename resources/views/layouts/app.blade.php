@@ -13,6 +13,7 @@
     <title>Nakshah</title>
 
     <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="{{ asset('/user/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Additional CSS Files -->
@@ -31,6 +32,26 @@
     <link rel="stylesheet" href="{{ asset('user/css/product.css') }}">
     @endif
 
+    @if (request()->routeIs('cart.index'))
+    <link rel="stylesheet" href="{{ asset('user/css/cart.css') }}">
+       
+    @endif
+
+    @if (request()->routeIs('product.review.create'))
+    <link rel="stylesheet" href="{{ asset('user/css/review.css') }}">
+    @endif
+    @if (request()->routeIs('checkout'))
+    <link rel="stylesheet" href="{{ asset('user/css/checkout.css') }}">
+    @endif
+    @if (request()->routeIs('order.confirmation'))
+    <link rel="stylesheet" href="{{ asset('user/css/confirmation.css') }}">
+    @endif
+    @if (request()->routeIs('user.contactUs'))
+    <link rel="stylesheet" href="{{ asset('user/css/contactus.css') }}">
+    @endif
+    @if (request()->routeIs('about'))
+    <link rel="stylesheet" href="{{ asset('user/css/about.css') }}">
+    @endif
 </head>
 
 <body>
@@ -77,11 +98,9 @@
                         <h4>Useful Links</h4>
                         <ul>
                             <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="#">Our Products</a></li>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="{{route('shop')}}">Our Products</a></li>
+                            <li><a href="{{ route('about') }}">About Us</a></li>
+                            <li><a href="{{ route('user.contactUs') }}">Contact Us</a></li>
                         </ul>
                     </div>
                 </div>
@@ -89,15 +108,8 @@
                     <div class="footer-contact">
                         <h4>Contact Us</h4>
                         <p><i class="fa fa-map-marker"></i> Amman, Jordan</p>
-                        <p><i class="fa fa-phone"></i> +962 79 000 0000</p>
+                        <p><i class="fa fa-phone"></i> +962 78 757 9985</p>
                         <p><i class="fa fa-envelope"></i> info@nakshah.com</p>
-                        <div class="newsletter">
-                            <h5>Subscribe to our newsletter</h5>
-                            <form>
-                                <input type="email" placeholder="Your email address">
-                                <button type="submit" class="filled-button">Subscribe</button>
-                            </form>
-                        </div>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -113,6 +125,7 @@
     <!-- Bootstrap core JavaScript -->
     <script src="{{ asset('/user/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('/user/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 
     <!-- Additional Scripts -->
@@ -122,7 +135,6 @@
     <script src="{{ asset('/user/js/isotope.js') }}"></script>
     <script src="{{ asset('/user/js/accordions.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
-    
     <!-- Stack for page-specific scripts -->
     @stack('scripts')
 

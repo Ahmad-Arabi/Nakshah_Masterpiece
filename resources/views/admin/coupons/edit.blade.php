@@ -48,6 +48,13 @@
                                 <option value="0" {{ !$coupon->is_active ? 'selected' : '' }}>Inactive</option>
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label for="is_featured" class="form-label">Featured</label>
+                            <select name="is_featured" class="form-select" required>
+                                <option value="1" {{ $coupon->is_featured ? 'selected' : '' }}>Yes</option>
+                                <option value="0" {{ !$coupon->is_featured ? 'selected' : '' }}>No</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Update Coupon</button>

@@ -47,8 +47,8 @@
                         <!-- City & Phone -->
                         <div class="col-md-6 col-12">
                             <div class="mb-3">
-                                <label for="city" class="form-label">City</label>
-                                <input type="text" class="form-control" id="edit_city" name="city" value="{{ $user->city ?? '' }}" placeholder="Enter City">
+                                <label for="address" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="edit_address" name="address" value="{{ $user->address ?? '' }}" placeholder="Enter Address">
                             </div>
                         </div>
                         <div class="col-md-6 col-12">

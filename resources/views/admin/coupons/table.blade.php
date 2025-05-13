@@ -16,6 +16,13 @@
                     <option value="0">Inactive</option>
                 </select>
             </th>
+            <th scope="col"> featured
+                <select class="form-select form-select-sm table-filter" data-filter="featured">
+                    <option value="">All</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -39,6 +46,14 @@
                             <span class="badge bg-success">Active</span>
                         @else
                             <span class="badge bg-danger">Inactive</span>
+                        @endif
+                    </td>
+                    <td>
+                        @if ($coupon->is_featured == 1) 
+                        
+                            <span class="badge bg-success">Yes</span>
+                        @else
+                            <span class="badge bg-secondary">No</span>
                         @endif
                     <td>
                         <div class="dropdown">

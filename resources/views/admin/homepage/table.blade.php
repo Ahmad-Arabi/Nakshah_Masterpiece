@@ -2,6 +2,21 @@
     .container {
         overflow: hidden;
     }
+  .chart-container {
+      margin-bottom: 30px;
+  }
+  .chart-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .table-container {
+      margin-top: 15px;
+  }
+  .table th, .table td {
+      vertical-align: middle;
+  }
 </style>
 <div class="container py-5 mt-2">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-5 g-4 dashboard_tiles justify-content-center"> 

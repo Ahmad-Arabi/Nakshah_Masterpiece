@@ -18,7 +18,8 @@ return new class extends Migration
             $table->enum('discount_type', ['fixed', 'percentage'])->default('fixed');
             $table->dateTime('valid_from')->nullable();
             $table->dateTime('valid_to')->nullable();
-            $table->boolean('is_active')->default(true); 
+            $table->boolean('is_active')->default(true);
+            $table->boolean('is_featured')->default(false);
             $table->timestamps();
         });
     }

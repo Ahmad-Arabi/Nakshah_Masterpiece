@@ -178,7 +178,6 @@ header {
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
     font-weight: 500;
     color: var(--dark);
 }
@@ -670,7 +669,6 @@ header {
 
 .cart-btn {
     display: inline-block;
-    padding: 8px 15px;
     background-color: var(--accent);
     color: white;
     border: none;
@@ -817,14 +815,36 @@ header {
 
 input[type="radio"]:checked {
     background-color: var(--accent); /* Change to your desired color */
-    appearance: none;
-    padding: 5px;
-    border: 2px solid var(--light); /* Customize border color */
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
+    border-color: var(--accent); /* Customize border color */
+}
+.form-check-input:focus {
+    border-color: var(--accent);
+    box-shadow:none;
 }
 
 .product-item .down-content h4 {
     margin-bottom: 0px
+}
+
+.cancel-btn {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+.cancel-btn:hover, .cancel-btn:focus, .cancel-btn:active {
+    background-color: var(--accent) !important;
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 .1rem rgba(253, 77, 13, 0.25);
+}
+.cart-btn {
+    background-color: var(--accent);
+    border-color: var(--accent);
+}
+.cart-btn:hover, .cart-btn:focus, .cart-btn:active {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 .1rem rgb(50 13 253 / 25%);
+}
+
+.oos {
+    font-size: 0.65rem;
 }

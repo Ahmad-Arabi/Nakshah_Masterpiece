@@ -69,6 +69,13 @@
                     Product Reviews
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.contact_us.index') }}"    
+                    class="nav-link {{ request()->routeIs('admin.contact_us.index') ? 'active' : 'text-white' }}">
+                    <i class="bi bi-chat-left-dots-fill"></i>
+                    Messages
+                </a>
+            </li>
             <div class="accordion" id="chartsAccordion">
                 <div class="accordion-item">
                     <h2 class="accordion-header">

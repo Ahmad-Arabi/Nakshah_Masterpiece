@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="product-detail-page">
-        <div class="container mt-2 mb-5">
+        <div class="container mt-2 mb-5 ">
             <div class="breadcrumb-section mb-2">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -16,10 +16,10 @@
                 </nav>
             </div>
 
-            <div class="product-main-content">
-                <div class="row">
+            <div class="product-main-content ">
+                <div class="row  nav-color-change">
                     <!-- Product Images Column -->
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-6 mb-4 ">
                         <div class="product-image-gallery p-3 rounded shadow-sm bg-white">
                             <div class="product-carousel owl-carousel">
                                 @if ($product->thumbnail)
@@ -38,37 +38,20 @@
                                         <img src="{{ asset('storage/' . $product->image1) }}"
                                             alt="{{ $product->name }} - Image 1" class="img-fluid main-image">
                                     </div>
-                                @else
-                                    <div class="item">
-                                        <img src="{{ asset('images/fallback.jpg') }}"
-                                            alt="{{ $product->name }} - Image 1" class="img-fluid main-image">
-                                    </div>
                                 @endif
                                 @if ($product->image2)
                                     <div class="item">
                                         <img src="{{ asset('storage/' . $product->image2) }}"
                                             alt="{{ $product->name }} - Image 2" class="img-fluid main-image">
                                     </div>
-                                @else
-                                    <div class="item">
-                                        <img src="{{ asset('images/fallback.jpg') }}"
-                                            alt="{{ $product->name }} - Image 2" class="img-fluid main-image">
-                                    </div>
                                 @endif
                             </div>
 
                             <div class="product-thumbnails row mt-3">
-                                @if ($product->thumbnail)
+                            @if ($product->thumbnail && $product->image1 || $product->thumbnail && $product->image2)
                                     <div class="col-4 col-md-3">
                                         <div class="thumbnail-item active" data-index="0">
                                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="Thumbnail"
-                                                class="img-fluid">
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="col-4 col-md-3">
-                                        <div class="thumbnail-item active" data-index="0">
-                                            <img src="{{ asset('images/fallback.jpg') }}" alt="Thumbnail"
                                                 class="img-fluid">
                                         </div>
                                     </div>
@@ -80,25 +63,11 @@
                                                 class="img-fluid">
                                         </div>
                                     </div>
-                                @else
-                                    <div class="col-4 col-md-3">
-                                        <div class="thumbnail-item" data-index="1">
-                                            <img src="{{ asset('images/fallback.jpg') }}" alt="Image 1"
-                                                class="img-fluid">
-                                        </div>
-                                    </div>
                                 @endif
                                 @if ($product->image2)
                                     <div class="col-4 col-md-3">
                                         <div class="thumbnail-item" data-index="2">
                                             <img src="{{ asset('storage/' . $product->image2) }}" alt="Image 2"
-                                                class="img-fluid">
-                                        </div>
-                                    </div>
-                                @else
-                                    <div class="col-4 col-md-3">
-                                        <div class="thumbnail-item" data-index="2">
-                                            <img src="{{ asset('images/fallback.jpg') }}" alt="Image 2"
                                                 class="img-fluid">
                                         </div>
                                     </div>
@@ -108,7 +77,7 @@
                     </div>
 
                     <!-- Product Info Column -->
-                    <div class="col-md-6">
+                    <div class="col-md-6 ">
                         <div class="product-info">
                             <h1 class="product-title">{{ $product->name }}</h1>
 
@@ -121,7 +90,7 @@
                                 </div>
                             @endif
 
-                            <div class="product-rating mt-2">
+                            <div class="product-rating mt-2 ">
                                 <div class="stars-rating d-flex align-items-center">
                                     @php
                                         $approvedReviews = $product->reviews->where('is_approved', 1);
@@ -153,13 +122,22 @@
                                 </div>
                             </div>
 
+                            @if(session('error'))
+                            <div class="alert alert-danger mt-3">
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
                             @if ($product->description)
                                 <div class="product-description mt-3">
                                     <p>{{ $product->description }}</p>
                                 </div>
                             @endif
 
-                            <form class="product-customize-form mt-4">
+                            <form class="product-customize-form mt-4" action="{{ route('cart.add') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+
                                 @if ($product->colors)
                                     <div class="form-group product-colors">
                                         <label>Available Colors:</label>
@@ -196,7 +174,7 @@
 
                                 <div class="form-group mt-3 custom-text-options">
                                     <label for="custom-text-input">Your Custom Text:</label>
-                                    <input type="text" class="form-control" id="custom-text-input"
+                                    <input type="text" class="form-control" id="custom-text-input" name="custom_text"
                                         placeholder="Enter your text here">
 
                                     <div class="text-color-options mt-2">
@@ -221,7 +199,7 @@
                                 <div class="form-group mt-3 custom-image-options d-none">
                                     <label for="custom-image-input">Upload Your Image:</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="custom-image-input">
+                                        <input type="file" class="custom-file-input" id="custom-image-input" name="custom_image">
                                         <label class="custom-file-label" for="custom-image-input">Choose file</label>
                                     </div>
                                     <small class="form-text text-muted">Max file size: 2MB. Supported formats: JPG,
@@ -236,11 +214,15 @@
                                                 <input class="form-check-input" type="radio" name="size"
                                                     id="size-{{ $productSize->size }}"
                                                     value="{{ $productSize->id }}"
-                                                    {{ $productSize->stock <= 0 ? 'disabled' : '' }}>
+                                                    {{ $productSize->stock <= 0 ? 'disabled' : '' }}
+                                                    {{ $loop->first && $productSize->stock > 0 ? 'checked' : '' }}>
                                                 <label
                                                     class="form-check-label {{ $productSize->stock <= 0 ? 'text-muted' : '' }}"
                                                     for="size-{{ $productSize->size }}">
                                                     {{ $productSize->size }}
+                                                    @if($productSize->stock <= 0)
+                                                        <small class="text-danger oos">(Out of stock)</small>
+                                                    @endif
                                                 </label>
                                             </div>
                                         @endforeach
@@ -252,7 +234,7 @@
                                         <label>Quantity:</label>
                                         <div class="quantity-input">
                                             <button type="button" class="quantity-btn quantity-decrease">-</button>
-                                            <input type="number" class="quantity-field" value="1" min="1"
+                                            <input type="number" class="quantity-field" name="quantity" value="1" min="1"
                                                 max="10">
                                             <button type="button" class="quantity-btn quantity-increase">+</button>
                                         </div>
@@ -263,10 +245,11 @@
                                 </div>
 
                                 <div class="form-group mt-4">
-                                    <button type="button" class="add-to-cart-btn btn btn-primary">
+                                    <button type="submit" class="add-to-cart-btn btn btn-primary cart-btn">
                                         <i class="fa fa-shopping-cart"></i> Add to Cart
                                     </button>
                                 </div>
+                                
                             </form>
                         </div>
                     </div>
@@ -302,10 +285,14 @@
                     @endif
                     <div class="tab-pane fade {{ !$product->description ? 'show active' : '' }}" id="reviews"
                         role="tabpanel" aria-labelledby="reviews-tab">
+                        <a href="{{ route('product.review.create', $product->id) }}" class="btn btn-primary cancel-btn mx-2 mt-2">
+                            <i class="fa fa-pencil" aria-hidden="true"></i> Write a Review
+                        </a>
                         <div class="p-4">
                             <h4>Customer Reviews</h4>
                             @if ($approvedReviews->count() > 0)
                                 <div class="reviews-list">
+                         
                                     @foreach ($approvedReviews as $review)
                                         <div class="review-item mb-4 pb-3 border-bottom">
                                             <div class="review-header d-flex justify-content-between">
@@ -322,7 +309,7 @@
                                                 </div>
                                             </div>
                                             <div class="review-content">
-                                                <p>{{ $review->comment }}</p>
+                                                <p>{{ $review->review }}</p>
                                             </div>
                                         </div>
                                     @endforeach
@@ -409,6 +396,25 @@
             </div>
         </div>
     </div>
+    <!-- Modal Structure -->
+<div class="modal fade" id="fileSizeModal" tabindex="-1" aria-labelledby="fileSizeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fileSizeModalLabel">File Size Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                File size exceeds the 2MB limit. Please choose a smaller file.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
 
     @push('styles')
     <link rel="stylesheet" href="{{ asset('user/css/product.css') }}">

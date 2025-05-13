@@ -22,6 +22,7 @@ class OrderFactory extends Factory
             'discount_applied' => $discountApplied,
             'delivery_address' => $this->faker->address(), // ✅ New field
             'phone_number' => $this->faker->phoneNumber(), // ✅ New field
+            'shipping_fees' => $this->faker->randomElement(['Free', 5.00]), // ✅ New field
         ];
     }
 }

@@ -1,10 +1,10 @@
 <x-app-layout>
     <!-- Featured Products Carousel Section -->
-    <div class="featured-bg py-5">
+    <div class="featured-bg py-5  nav-color-change">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="section-heading mb-4">
+                    <div class="section-heading mb-4 ">
                         <h2 >Featured Products</h2>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
 
     <!-- Horizontal Filters - Now directly below featured section without margins -->
     <div class="filter-section">
-        <div class="container-fluid">
+        <div class="container-fluid ">
             <h4 class="mb-3">Find Your Product</h4>
 
             <form action="{{ route('shop') }}" method="GET" class="filter-form">
@@ -137,7 +137,7 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group d-none d-sm-block">
                     <label for="category">Category</label>
                     <select class="form-control" id="category" name="category">
                         <option value="">All Categories</option>
@@ -149,7 +149,7 @@
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group d-none d-sm-block">
                     <label for="color">Color</label>
                     <select class="form-control" id="color" name="color">
                         <option value="">Any Color</option>
@@ -161,7 +161,7 @@
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group d-none d-sm-block">
                     <label for="size">Size</label>
                     <select class="form-control" id="size" name="size">
                         <option value="">Any Size</option>
@@ -173,7 +173,7 @@
                     </select>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group d-none d-sm-block">
                     <label for="sort">Sort By</label>
                     <select class="form-control" id="sort" name="sort">
                         <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Newest First</option>
@@ -182,7 +182,7 @@
                     </select>
                 </div>
 
-                <div class="filter-buttons">
+                <div class="filter-buttons d-none d-sm-block ">
                     <button type="submit" class="btn btn-primary">Apply</button>
                     <a href="{{ route('shop') }}" class="btn btn-outline-secondary">Clear</a>
                 </div>
@@ -190,8 +190,9 @@
         </div>
     </div>
 
+
     <!-- Main Products Section -->
-    <div class="container my-4" id="product-grid">
+    <div class="container my-4 " id="product-grid">
         <div class="row">
             <!-- Products Grid -->
             <div class="col-12">

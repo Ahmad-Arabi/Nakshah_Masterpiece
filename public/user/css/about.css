@@ -1,0 +1,380 @@
+/* About us page styles */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Page heading banner */
+.about-heading {
+    background-image: url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 80px 0px 80px 0px;
+    text-align: center;
+}
+
+.about-heading .text-content h4 {
+    color: var(--accent);
+    font-size: 22px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.about-heading .text-content h2 {
+    color: var(--light);
+    font-size: 60px;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+/* About features section */
+.about-features {
+    margin-top: 40px;
+}
+
+.about-features .section-heading {
+    text-align: left;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.about-features .section-heading h2 {
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 15px;
+}
+
+.about-features p {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+}
+
+.about-features .left-content h4 {
+    font-size: 17px;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.about-features .right-image img {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.about-features .right-image img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.about-features .social-icons li a {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    line-height: 40px;
+    background-color: var(--secondary);
+    color: var(--text);
+    font-size: 18px;
+    text-align: center;
+    transition: all .3s;
+}
+
+.about-features .social-icons li a:hover {
+    background-color: var(--accent);
+    color: var(--light);
+}
+
+/* Team members section */
+.team-members {
+    margin-top: 40px;
+}
+
+.team-members .section-heading {
+    text-align: left;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.team-members .section-heading h2 {
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 15px;
+}
+
+.team-member {
+    border: 1px solid rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.team-member:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.team-member .thumb-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.team-member img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.team-member .hover-effect {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.7);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+}
+
+.team-member:hover .hover-effect {
+    opacity: 1;
+    visibility: visible;
+}
+
+.team-member .hover-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+}
+
+.team-member .social-icons li a {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    line-height: 40px;
+    background-color: var(--accent);
+    color: var(--light);
+    font-size: 18px;
+    text-align: center;
+    transition: all .3s;
+    margin: 0 3px;
+}
+
+.team-member .social-icons li a:hover {
+    background-color: var(--primary);
+}
+
+.team-member .down-content {
+    padding: 20px 30px;
+    text-align: center;
+    background-color: var(--light);
+}
+
+.team-member .down-content h4 {
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 8px;
+}
+
+.team-member .down-content span {
+    display: block;
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+/* Services section */
+.services {
+    background-image: url('https://images.unsplash.com/photo-1558769132-cb1aea458c5e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 60px 0px;
+    margin-top: 40px;
+}
+
+.services .service-item {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.services .service-item:hover {
+    background-color: rgba(255, 255, 255, 1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.services .service-item .icon {
+    background-color: var(--light);
+    padding: 40px;
+}
+
+.services .service-item .icon i {
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    text-align: center;
+    line-height: 100px;
+    background-color: var(--accent);
+    color: var(--light);
+    font-size: 32px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.services .service-item:hover .icon i {
+    background-color: var(--primary);
+    transform: rotateY(360deg);
+}
+
+.services .service-item .down-content {
+    background-color: var(--light);
+    padding: 30px;
+}
+
+.services .service-item .down-content h4 {
+    font-size: 17px;
+    color: var(--primary);
+    margin-bottom: 20px;
+}
+
+.services .service-item .down-content .filled-button {
+    margin-top: 20px;
+    background-color: var(--accent);
+    color: var(--light);
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: 300;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: inline-block;
+    transition: all 0.3s;
+    border: none;
+}
+
+.services .service-item .down-content .filled-button:hover {
+    background-color: var(--primary);
+}
+
+/* Partners section */
+.happy-clients {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.happy-clients .section-heading {
+    text-align: left;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.happy-clients .section-heading h2 {
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 15px;
+}
+
+.happy-clients .client-item img {
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+    padding: 15px;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.happy-clients .client-item:hover img {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* Vision mission section */
+.vision-mission {
+    background-color: var(--background);
+    padding: 40px 0;
+    margin: 30px 0;
+}
+
+.vision-mission .card {
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.vision-mission .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.vision-mission .card-header {
+    background-color: var(--primary);
+    color: var(--light);
+    text-align: center;
+    padding: 20px;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.vision-mission .card-body {
+    padding: 30px;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .about-features .left-content {
+        margin-top: 30px;
+    }
+    
+    .about-features .right-image {
+        margin-bottom: 30px;
+    }
+    
+    .services {
+        padding: 60px 0;
+    }
+    
+    .services .service-item {
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 767px) {
+    .about-heading .text-content h2 {
+        font-size: 36px;
+        letter-spacing: 0.5px;
+    }
+    
+    .about-heading .text-content h4 {
+        font-size: 18px;
+    }
+    
+    .about-heading {
+        padding: 150px 0px 100px 0px;
+    }
+    
+    .team-member {
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

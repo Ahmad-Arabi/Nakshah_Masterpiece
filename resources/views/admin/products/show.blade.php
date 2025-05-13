@@ -58,7 +58,7 @@
         <div class="product-card shadow">
             <div class="card-body">
                 <h3 class="card-title text-center">{{ $product->name }}</h3>
-                <h6 class="text-muted text-center">Category: {{ $product->category->name }}</h6>
+                <h6 class="text-muted text-start">Category: {{ $product->category->name }}</h6>
 
                 <div id="productCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
                     <div class="carousel-inner text-center">
@@ -85,6 +85,13 @@
                     </button>
                 </div>
 
+                @if ($product->description)
+                    <div class="text-center">
+                        <h5 class="text-center">Description</h5>
+                        <p class="text-center">{{ $product->description }}</p>
+                    </div>
+                @endif
+                
                 <div class="row g-3">
                     <div class="col-md-6">
                         <p><strong>Color:</strong> {{ $product->color }}</p>

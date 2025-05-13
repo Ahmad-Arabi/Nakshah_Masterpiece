@@ -1,18 +1,19 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
-use App\Models\Order;
 use App\Models\User;
-use App\Models\Product;
+
+use App\Models\Order;
 use App\Models\Coupon;
+use App\Models\Product;
+use App\Models\ProductSize;
+use Illuminate\Http\Request;
 use App\Models\ProductReview;
+use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         // Orders Overview
         $totalOrders = Order::count();
@@ -49,13 +50,40 @@ class AdminController extends Controller
         // Reviews Overview
         $totalReviews = ProductReview::count();
         $pendingReviews = ProductReview::whereNull('is_approved')->count();
+
+
+        $mostSold = Product::withCount('orderItems')
+            ->orderByDesc('order_items_count')
+            ->limit(5)
+            ->get(['name', 'order_items_count']);
+    
+        // Lowest Stock Products
+        $lowStock = Product::where('quantity', '<=', 5)
+            ->orderBy('quantity', 'asc')
+            ->limit(5)
+            ->get(['name', 'quantity']);
+    
+        // izes With Low Stock 
+        $lowStockSizes = ProductSize::where('stock', '<=', 3)
+            ->join('products', 'product_sizes.product_id', '=', 'products.id') // ✅ Joins product name
+            ->orderBy('stock', 'asc')
+            ->limit(10)
+            ->get(['product_sizes.size', 'product_sizes.stock', 'products.name as product_name']);
+    
+        if ($request->ajax()) {
+            return response()->json([
+                'mostSold' => $mostSold,
+                'lowStock' => $lowStock,
+                'lowStockSizes' => $lowStockSizes
+            ], 200);
+        }
     
         return view('admin.homepage.index', compact(
             'totalOrders', 'completedOrders', 'pendingOrders', 'monthlyRevenue',
             'totalUsers', 'adminUsers', 'newUsersThisMonth',
             'totalProducts', 'lowStockProducts', 'mostExpensiveProduct', 'mostOrderedItem',
             'totalCoupons', 'activeCoupons', 'mostUsedCoupon',
-            'totalReviews', 'pendingReviews'
+            'totalReviews', 'pendingReviews', 'mostSold', 'lowStock', 'lowStockSizes'
         ));
     }
 

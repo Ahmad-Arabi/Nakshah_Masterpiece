@@ -19,6 +19,10 @@ class AdminCouponsController extends Controller
             $query->where('is_active', $request->status);
         }
 
+        if ($request->has('featured')) {
+            $query->where('is_featured', $request->featured);
+        }
+
         $coupons = $query->orderBy('updated_at', 'desc')->paginate(10);
 
         if ($request->ajax()) {
@@ -45,6 +49,7 @@ class AdminCouponsController extends Controller
             'valid_from' => 'required|date',
             'valid_to' => 'required|date',
             'is_active' => 'required|boolean',
+            'is_featured' => 'nullable|boolean',
         ]);
 
         Coupon::create($validatedData); // Save the coupon
@@ -75,6 +80,7 @@ class AdminCouponsController extends Controller
             'valid_from' => 'required|date',
             'valid_to' => 'required|date',
             'is_active' => 'required|boolean',
+            'is_featured' => 'nullable|boolean',
         ]);
 
         $coupon = Coupon::findOrFail($id);

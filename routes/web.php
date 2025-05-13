@@ -2,16 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ShopController;
-use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\User\ReviewController;
+use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\User\CheckoutController;
+use App\Http\Controllers\User\ContactUsController;
 use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\AdminChartsController;
 use App\Http\Controllers\Admin\AdminOrdersController;
 use App\Http\Controllers\Admin\AdminCouponsController;
 use App\Http\Controllers\Admin\AdminReviewsController;
 use App\Http\Controllers\Admin\AdminProductsController;
+use App\Http\Controllers\Admin\AdminContactUsController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
 
 Route::get('/',[HomeController::class, 'index'])->name('home');
@@ -19,6 +25,39 @@ Route::get('/',[HomeController::class, 'index'])->name('home');
 // User Shop Routes
 Route::get('/shop', [ShopController::class, 'index'])->name('shop');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('product.show');
+
+// Cart Routes
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'updateQuantity'])->name('cart.update');
+Route::get('/cart/remove/{itemId}', [CartController::class, 'removeItem'])->name('cart.remove');
+Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
+
+// Review Routes
+Route::get('/products/{product}/review', [ReviewController::class, 'create'])->name('product.review.create')->middleware('auth');
+Route::post('/products/{product}/review', [ReviewController::class, 'store'])->name('product.review.store')->middleware('auth');
+
+// Checkout Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+    Route::post('/checkout/coupon', [CheckoutController::class, 'applyCoupon'])->name('checkout.apply-coupon');
+    Route::post('/checkout/coupon/remove', [CheckoutController::class, 'removeCoupon'])->name('checkout.remove-coupon');
+    Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.place-order');
+    
+    // Order Routes
+    Route::get('/orders', [OrderController::class, 'index'])->name('user.orders');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('order.details');
+    Route::get('/order/confirmation/{order}', [OrderController::class, 'confirmation'])->name('order.confirmation');
+});
+
+//Contact Us
+Route::get('/contact', [ContactUsController::class, 'index'])->name('user.contactUs');
+Route::post('/contact', [ContactUsController::class, 'store'])->name('user.contactUs.store');
+
+//About Us
+Route::get('/about', function() {
+    return view('userside.about');
+})->name('about');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -80,6 +119,11 @@ Route::prefix('admin')->name('admin.')->middleware('isAdmin')->group(function ()
     Route::delete('/reviews/{id}', [AdminReviewsController::class, 'destroy'])->name('reviews.destroy');
     Route::post('/reviews/{id}/{actionType}', [AdminReviewsController::class, 'update'])->name('reviews.approve');
 
+    //Messages CRUD
+    Route::get('/messages', [AdminContactUsController::class, 'index'])->name('contact_us.index');
+    Route::delete('/messages/{id}', [AdminContactUsController::class, 'destroy'])->name('messages.destroy');
+    Route::put('/messages/{id}', [AdminContactUsController::class, 'update'])->name('messages.update');
+    
     // //Charts CRUD
     Route::get('/charts/products', [AdminChartsController::class, 'products'])->name('charts.products');
     Route::get('/charts', [AdminChartsController::class, 'index'])->name('charts.index');

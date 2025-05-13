@@ -20,6 +20,7 @@ class Product extends Model
         'isActive',
         'isFeatured',
         'quantity',
+        'description',
     ];
 
     public function category()

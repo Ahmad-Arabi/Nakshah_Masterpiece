@@ -22,14 +22,14 @@
 
                     <div class="mb-3">
                         <label for="code" class="form-label">Coupon Code</label>
-                        <input type="text" class="form-control" name="code" required placeholder="Enter a unique code"
-                        value="{{ old('code') }}">
+                        <input type="text" class="form-control" name="code" required
+                            placeholder="Enter a unique code" value="{{ old('code') }}">
                     </div>
 
                     <div class="mb-3">
                         <label for="discount" class="form-label">Discount</label>
-                        <input type="number" class="form-control" name="discount" step="any" required placeholder="Enter discount value"
-                        value="{{ old('discount') }}">
+                        <input type="number" class="form-control" name="discount" step="any" required
+                            placeholder="Enter discount value" value="{{ old('discount') }}">
                     </div>
 
                     <div class="mb-3">
@@ -42,12 +42,14 @@
 
                     <div class="mb-3">
                         <label for="valid_from" class="form-label">Valid From</label>
-                        <input type="date" class="form-control" name="valid_from" required value="{{ old('valid_from') }}">
+                        <input type="date" class="form-control" name="valid_from" required
+                            value="{{ old('valid_from') }}">
                     </div>
 
                     <div class="mb-3">
                         <label for="valid_to" class="form-label">Valid Until</label>
-                        <input type="date" class="form-control" name="valid_to" required value="{{ old('valid_to') }}">
+                        <input type="date" class="form-control" name="valid_to" required
+                            value="{{ old('valid_to') }}">
                     </div>
 
                     <div class="mb-3">
@@ -55,6 +57,13 @@
                         <select name="is_active" class="form-select" required>
                             <option value="1" selected>Active</option>
                             <option value="0">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="is_featured" class="form-label">Featured</label>
+                        <select name="is_featured" class="form-select" required>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
                         </select>
                     </div>
 

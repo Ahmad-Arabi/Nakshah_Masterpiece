@@ -404,6 +404,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 });
+
+//Handle status change for messages 
+document.addEventListener("DOMContentLoaded", function () {
+    const actionModal = document.getElementById("actionModal");
+
+ 
+    document.addEventListener("click", function (event) {
+        const button = event.target.closest("button"); 
+        if (!button) return;
+
+        if (button.classList.contains("resolve-action")) {
+            const messageId = button.getAttribute("data-id");
+
+            if (!messageId) {
+                console.error("Missing data attributes on button.");
+                return;
+            }
+
+            const modalMessageId = document.getElementById("modalMessageId");
+            const actionForm = document.getElementById("actionForm");
+
+            if (modalMessageId && actionForm) {
+                modalMessageId.value = messageId;
+                actionForm.action = `/admin/messages/${messageId}`;
+            } else {
+                console.error(" One or more modal elements are missing.");
+            }
+        }
+    });
+
+
+});
+
 // <!-- Sidebar Toggle Script -->
 
 // document.addEventListener('DOMContentLoaded', function() {
