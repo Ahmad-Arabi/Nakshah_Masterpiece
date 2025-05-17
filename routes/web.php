@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/checkout/coupon', [CheckoutController::class, 'applyCoupon'])->name('checkout.apply-coupon');
     Route::post('/checkout/coupon/remove', [CheckoutController::class, 'removeCoupon'])->name('checkout.remove-coupon');
     Route::post('/checkout/place-order', [CheckoutController::class, 'placeOrder'])->name('checkout.place-order');
+   
     
     // Order Routes
     Route::get('/orders', [OrderController::class, 'index'])->name('user.orders');
@@ -120,9 +121,10 @@ Route::prefix('admin')->name('admin.')->middleware('isAdmin')->group(function ()
     Route::post('/reviews/{id}/{actionType}', [AdminReviewsController::class, 'update'])->name('reviews.approve');
 
     //Messages CRUD
-    Route::get('/messages', [AdminContactUsController::class, 'index'])->name('contact_us.index');
-    Route::delete('/messages/{id}', [AdminContactUsController::class, 'destroy'])->name('messages.destroy');
-    Route::put('/messages/{id}', [AdminContactUsController::class, 'update'])->name('messages.update');
+    Route::get('/messages', [AdminContactUsController::class, 'index'])->name('contact-us.index');
+    Route::get('/messages/{id}', [AdminContactUsController::class, 'show'])->name('contact-us.show');
+    Route::delete('/messages/{id}', [AdminContactUsController::class, 'destroy'])->name('contact-us.destroy');
+    Route::put('/messages/{id}', [AdminContactUsController::class, 'update'])->name('contact-us.update');
     
     // //Charts CRUD
     Route::get('/charts/products', [AdminChartsController::class, 'products'])->name('charts.products');

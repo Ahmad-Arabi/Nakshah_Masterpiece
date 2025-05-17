@@ -253,9 +253,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row services-row">
+            <div class="row services-row gy-3">
                 <div class="col-md-4">
-                    <div class="service-item">
+                    <div class="service-item py-2">
                         <div class="service-icon">
                             <i class="fa fa-paint-brush"></i>
                         </div>
@@ -265,7 +265,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="service-item">
+                    <div class="service-item py-2">
                         <div class="service-icon">
                             <i class="fa fa-certificate"></i>
                         </div>
@@ -275,7 +275,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="service-item">
+                    <div class="service-item py-2">
                         <div class="service-icon">
                             <i class="fa fa-truck"></i>
                         </div>
@@ -334,22 +334,22 @@
                     nav: false,
                     dots: true,
                     dotsEach: true,
-                    autoplay: true,
+                    autoplay: false,
                     autoplayTimeout: 3000,
                     responsive: {
                         0: {
                             items: 2,
-                            margin: 10
+                            margin: 15
                         },
                         576: {
-                            items: 2
+                            items: 3
                         },
                         768: {
                             items: 3,
                             margin: 8
                         },
                         992: {
-                            items: 3
+                            items: 4
                         },
                         1200: {
                             items: 4
@@ -367,15 +367,15 @@
                     autoplayTimeout: 3000,
                     nav: false,
                     dots: false, 
-                    margin: 20,
-                    wrap: true,
+                    margin: 50,
                     center: true,
+                    items: 3,
                     responsive: {
                         0: {
                             items: 1
                         },
                         600: {
-                            items: 2
+                            items: 1
                         },
                         1000: {
                             items: 2

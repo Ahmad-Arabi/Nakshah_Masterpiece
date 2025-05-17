@@ -1,0 +1,86 @@
+/* Profile page additional styles */
+.profile-page .order-item {
+    border-left: 4px solid var(--accent);
+    background-color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+}
+
+.profile-page .order-item:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header.accent-header, 
+#order-details-modal .modal-header {
+    background-color: var(--accent);
+    color: #fff;
+    border-bottom: none;
+}
+
+#order-details-modal .modal-title {
+    color: white;
+}
+
+#order-details-modal .modal-body, #order-details-modal .modal-footer {
+    background-color: var(--background);
+}
+
+.modal-header .btn-close.btn-close-white {
+    filter: invert(1);
+}
+
+.badge.bg-primary {
+    background-color: var(--accent) !important;
+}
+
+/* Payment badge styles */
+.badge.payment-badge {
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+/* Order details styling */
+.order-detail-header {
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.order-item-row {
+    padding: 1rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.order-item-row:hover {
+    background-color: rgba(243, 63, 63, 0.03);
+}
+
+/* Custom options styling */
+.custom-option-label {
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.custom-option-value {
+    background-color: rgba(243, 63, 63, 0.1);
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.85rem;
+}
+
+/* Summary section */
+.order-summary-row {
+    margin-bottom: 0.5rem;
+}
+
+.order-total-row {
+    font-weight: 600;
+    color: var(--accent);
+    padding-top: 0.75rem;
+    margin-top: 0.75rem;
+    border-top: 1px solid #e0e0e0;
+}

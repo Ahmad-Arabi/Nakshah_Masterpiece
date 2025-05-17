@@ -174,6 +174,7 @@ class CheckoutController extends Controller
         }
         
         try {
+            
             // Create the order
             $order = Order::create([
                 'user_id' => Auth::id(),
@@ -183,7 +184,8 @@ class CheckoutController extends Controller
                 'phone_number' => $request->phone_number,
                 'coupon_id' => $appliedCoupon['id'] ?? null,
                 'discount_applied' => $discount,
-                'shipping_fees' => $shippingFees
+                'shipping_fees' => $shippingFees,
+                'payment_method' => $request->payment_method,
             ]);
             
             // Add each item to the order
@@ -223,6 +225,28 @@ class CheckoutController extends Controller
                     $productSize->save();
                 }
             }
+
+            //check for stripe payment
+            if ($request->payment_method === "credit_card") {
+            try {
+                $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+                $charge = $stripe->charges->create([
+                    'amount' => ceil($totalPrice * 100 * 1.41), // Convert amount
+                    'currency' => 'usd',
+                    'source' => $request->stripeToken,
+                    'description' => 'Nakshah Order#' . $order->id . ' Payment',    
+                ]);
+
+                // If charge fails, throw an exception
+                if (!$charge) {
+                    throw new \Exception("Stripe charge failed");
+                }
+                } catch (\Exception $e) {
+                return back()->with('error', 'Payment failed: ' . $e->getMessage());
+                }
+            }
+
+
             
             // Clear cart and checkout session data
             Cookie::queue(Cookie::forget('cart'));
@@ -235,4 +259,5 @@ class CheckoutController extends Controller
             return back()->with('error', 'There was an issue processing your order. Please try again.');
         }
     }
+    
 }

@@ -27,10 +27,9 @@
                             <label for="category_id" class="form-label">Category</label>
                             <select class="form-select" name="category_id" required>
                                 <option value="" disabled selected>-- Select a Category --</option>
-                                @foreach ($products as $product)
-                                    <option value="{{ $product->category->id }}"
-                                        {{ old('category_id') == $product->category->id ? 'selected' : '' }}>
-                                        {{ $product->category->name }}
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">
+                                        {{ $category->name }}
                                     </option>
                                 @endforeach
                             </select>

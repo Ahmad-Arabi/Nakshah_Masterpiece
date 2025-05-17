@@ -126,7 +126,8 @@
 
                 <tr class="align-middle">
                     <td colspan="4"><strong>Delivery Address:</strong> {{ $order->delivery_address }}</td>
-                    <td colspan="3"><strong>Phone Number:</strong> {{ $order->phone_number }}</td>
+                    <td colspan="2"><strong>Phone Number:</strong> {{ $order->phone_number }}</td>
+                    <td colspan="1"><strong>Payment Method:</strong> {{ $order->payment_method }}</td>
                 </tr>
             </tbody>
         </table>

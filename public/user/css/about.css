@@ -78,8 +78,8 @@ header {
     height: 40px;
     display: inline-block;
     line-height: 40px;
-    background-color: var(--secondary);
-    color: var(--text);
+    background-color: var(--primary);
+    color: var(--light);
     font-size: 18px;
     text-align: center;
     transition: all .3s;
@@ -93,6 +93,10 @@ header {
 /* Team members section */
 .team-members {
     margin-top: 40px;
+}
+
+.service-item p {
+    height: 120px;
 }
 
 .team-members .section-heading {

@@ -19,7 +19,7 @@
             <div class="product-main-content ">
                 <div class="row  nav-color-change">
                     <!-- Product Images Column -->
-                    <div class="col-md-6 mb-4 ">
+                    <div class="col-md-6 mb-4">
                         <div class="product-image-gallery p-3 rounded shadow-sm bg-white">
                             <div class="product-carousel owl-carousel">
                                 @if ($product->thumbnail)
@@ -47,7 +47,7 @@
                                 @endif
                             </div>
 
-                            <div class="product-thumbnails row mt-3">
+                            <div class="product-thumbnails row mt-3 w-50">
                             @if ($product->thumbnail && $product->image1 || $product->thumbnail && $product->image2)
                                     <div class="col-4 col-md-3">
                                         <div class="thumbnail-item active" data-index="0">

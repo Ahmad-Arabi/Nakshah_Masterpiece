@@ -81,3 +81,9 @@
         border: none;
     }
 }
+
+@media (max-width: 576px) {
+    .order-confirmation-page .btn-primary, .order-confirmation-page .btn-outline-secondary {
+        font-size: 0.9rem;
+    }
+}

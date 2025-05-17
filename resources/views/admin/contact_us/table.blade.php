@@ -1,4 +1,4 @@
-<table class="table table-striped table-hover usersTable">
+<table class="table  usersTable">
     <thead>
         <tr class="table-dark">
             <th scope="col" class="d-none d-md-table-cell">#</th>
@@ -36,7 +36,11 @@
                         @endif
                     </td>
                     <td>
-                        <div class="review_actions d-flex justify-content-center align-items-center gap-2 my-2">
+                        <div id='contactButtons' class="review_actions d-flex justify-content-center align-items-center gap-2 my-2">
+                            <a href="{{ route('admin.contact-us.show', $message->id) }}" class="dropdown-item view-action text-primary p-0"
+                                title="View message details">
+                                <i class="bi bi-eye-fill fs-4"></i>
+                            </a>
                             @if ($message->status === 'pending')
                                 <button type="button" class="dropdown-item text-success resolve-action p-0"
                                     title="Resolve this case" data-id="{{ $message->id }}" data-info="resolve"

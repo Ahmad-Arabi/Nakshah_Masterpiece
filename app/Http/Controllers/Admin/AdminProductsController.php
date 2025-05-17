@@ -40,7 +40,7 @@ class AdminProductsController extends Controller
         if ($request->ajax()) {
             return view('admin.products.table', compact('products', 'productSizes', 'categories'))->render();
         }
-    
+
         return view('admin.products.index', compact('products', 'productSizes', 'categories'));
     }
 

@@ -10,7 +10,7 @@
             </div>
             <div class="container text-center mb-3">
                 {{-- <p class="mb-4">A confirmation email has been sent to your email address.</p> --}}
-                <div class="d-flex justify-content-center gap-3">
+                <div class="d-flex justify-content-center gap-2 gap-sm-3">
                     <a href="{{ route('profile.edit') }}" class="btn btn-primary mx-1">
                         <i class="fa fa-list-alt me-2"></i> View My Orders
                     </a>

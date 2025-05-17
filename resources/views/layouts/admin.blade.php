@@ -70,8 +70,8 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('admin.contact_us.index') }}"    
-                    class="nav-link {{ request()->routeIs('admin.contact_us.index') ? 'active' : 'text-white' }}">
+                <a href="{{ route('admin.contact-us.index') }}"
+                    class="nav-link {{ request()->routeIs('admin.contact-us.index') ? 'active' : 'text-white' }}">
                     <i class="bi bi-chat-left-dots-fill"></i>
                     Messages
                 </a>

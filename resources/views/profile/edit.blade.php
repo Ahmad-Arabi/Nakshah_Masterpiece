@@ -94,9 +94,9 @@
                             <div id="order-history-content">
                                 <h5 class="mb-4" style="color: var(--primary);">{{ __('Order History') }}</h5>
                                 
-                                @if($user->orders && $user->orders->count() > 0)
+                                @if(isset($orders) && $orders->count() > 0)
                                     <div class="order-list">
-                                        @foreach($user->orders as $order)
+                                        @foreach($orders as $order)
                                             <div class="card mb-3 order-item" data-order-id="{{ $order->id }}" 
                                                 style="cursor: pointer;">
                                                 <div class="card-body">
@@ -123,12 +123,17 @@
                                     <div class="modal fade" id="order-details-modal" tabindex="-1" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered modal-lg">
                                             <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" style="color: var(--primary);">Order Details</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <div class="modal-header" style="background-color: var(--accent); color: #fff;">
+                                                    <h5 class="modal-title">
+                                                        <i class="fas fa-shopping-bag me-2"></i>Order Details
+                                                    </h5>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div id="order-details-content"></div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -341,133 +346,11 @@
                 orderHistoryTab.classList.add('active');
                 editProfileTab.classList.remove('active');
             });
-            
-            // Order details modal
-            const orderItems = document.querySelectorAll('.order-item');
-            const orderDetailsModal = new bootstrap.Modal(document.getElementById('order-details-modal'));
-            const orderDetailsContent = document.getElementById('order-details-content');
-            
-            orderItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const orderId = this.getAttribute('data-order-id');
-                    // Fetch order details via AJAX
-                    fetch(`/orders/${orderId}/details`)
-                        .then(response => response.json())
-                        .then(data => {
-                            // Fill the modal with order details
-                            let itemsHtml = '';
-                            data.items.forEach(item => {
-                                // Ensure price is a number
-                                const itemPrice = parseFloat(item.price);
-                                const itemTotal = parseFloat(item.total);
-                                
-                                // Check for custom options
-                                const hasCustomText = item.options.custom_text && item.options.custom_text.trim() !== '';
-                                const hasCustomImage = item.options.custom_image && item.options.custom_image.trim() !== '';
-                                
-                                itemsHtml += `
-                                    <div class="border-bottom py-3">
-                                        <div class="row align-items-start">
-                                            <div class="col-8 d-flex">
-                                                <img src="${item.thumbnail}" alt="${item.product_name}" class="rounded" 
-                                                    style="width: 60px; height: 60px; object-fit: cover;">
-                                                <div class="ms-3">
-                                                    <p class="fw-medium mb-1">${item.product_name}</p>
-                                                    <p class="text-muted small mb-0">Qty: ${item.quantity}</p>
-                                                    ${item.options.size ? `<p class="text-muted small mb-0">Size: ${item.options.size}</p>` : ''}
-                                                </div>
-                                            </div>
-                                            <div class="col-4 text-end">
-                                                <p class="fw-medium">${itemPrice.toFixed(2)} JOD</p>
-                                            </div>
-                                        </div>
-                                        
-                                        ${hasCustomText ? `
-                                        <div class="row mt-2">
-                                            <div class="col-12 ps-5 ms-4">
-                                                <div class="d-flex align-items-center">
-                                                    <span class="small fw-medium me-2" style="color: var(--primary);">Custom Text:</span>
-                                                    <span class="small px-2 py-1 rounded" style="
-                                                        background-color: rgba(245, 240, 225, 0.5); 
-                                                        color: ${item.options.custom_text_color || '#000000'};
-                                                        border: 1px solid #e5e0d1;
-                                                    ">${item.options.custom_text}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        ` : ''}
-                                        
-                                        ${hasCustomImage ? `
-                                        <div class="row mt-2">
-                                            <div class="col-12 ps-5 ms-4">
-                                                <span class="small fw-medium d-block mb-1" style="color: var(--primary);">Custom Image:</span>
-                                                <img src="${item.options.custom_image}" alt="Custom Image" 
-                                                    class="border rounded" style="height: 60px; object-fit: contain;">
-                                            </div>
-                                        </div>
-                                        ` : ''}
-                                    </div>
-                                `;
-                            });
-                            
-                            // Ensure all monetary values are numbers
-                            const subtotal = parseFloat(data.order.subtotal);
-                            const shipping = data.order.shipping_fees;
-
-                            const discount = parseFloat(data.order.discount || 0);
-                            const total = parseFloat(data.order.total_price);
-                            console.log(data.order);
-                            orderDetailsContent.innerHTML = `
-                                <div class="border-bottom pb-3 mb-3">
-                                    <div class="row mb-2">
-                                        <div class="col-6 text-muted small">Order #${data.order.id}</div>
-                                        <div class="col-6 text-end text-muted small">${data.order.date}</div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-6 text-muted small">Status:</div>
-                                        <div class="col-6 text-end fw-medium" style="color: var(--primary);">${data.order.status}</div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6 text-muted small">Shipping Address:</div>
-                                        <div class="col-6 text-end small">${data.order.delivery_address}</div>
-                                    </div>
-                                </div>
-                                
-                                <h6 class="fw-medium mb-3" style="color: var(--primary);">Items</h6>
-                                <div class="mb-4">
-                                    ${itemsHtml}
-                                </div>
-                                
-                                <div class="border-top pt-3 mt-3">
-                                    <div class="row mb-1">
-                                        <div class="col-6 text-muted small">Subtotal:</div>
-                                        <div class="col-6 text-end fw-medium">${subtotal.toFixed(2)} JOD</div>
-                                    </div>
-                                    <div class="row mb-1">
-                                        <div class="col-6 text-muted small">Shipping:</div>
-                                        <div class="col-6 text-end fw-medium">${shipping}</div>
-                                    </div>
-                                    ${discount > 0 ? 
-                                    `<div class="row mb-1">
-                                        <div class="col-6 text-muted small">Discount:</div>
-                                        <div class="col-6 text-end fw-medium text-danger">-${discount.toFixed(2)} JOD</div>
-                                    </div>` : ''}
-                                    <div class="row border-top pt-2 mt-2">
-                                        <div class="col-6 fw-medium" style="color: var(--primary);">Total:</div>
-                                        <div class="col-6 text-end fw-medium" style="color: var(--primary);">${total.toFixed(2)} JOD</div>
-                                    </div>
-                                </div>
-                            `;
-                            
-                            orderDetailsModal.show();
-                        })
-                        .catch(error => {
-                            console.error('Error fetching order details:', error);
-                            orderDetailsContent.innerHTML = '<div class="alert alert-danger">Error loading order details. Please try again.</div>';
-                            orderDetailsModal.show();
-                        });
-                });
-            });
         });
     </script>
+    
+    <!-- Custom profile CSS and Order details script -->
+    <link rel="stylesheet" href="{{ asset('user/css/profile.css') }}">
+    <script src="{{ asset('js/order-details.js') }}"></script>
+</script>
 </x-app-layout>

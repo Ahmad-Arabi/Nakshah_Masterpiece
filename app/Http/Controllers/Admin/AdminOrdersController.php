@@ -9,6 +9,7 @@ use App\Models\OrderItem;
 use App\Models\ProductSize;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class AdminOrdersController extends Controller
 {
@@ -143,8 +144,11 @@ class AdminOrdersController extends Controller
                 $oldImage = $orderItem->custom_image;
                 $newImage = $itemData['custom_image'] ?? null;
                 if ( $newImage !== $oldImage) {
-                    $imagePath = $itemData['custom_image']->store('order_images/' . $order->id . '/', 'public');
-                    $orderItem->update(['custom_image' => $imagePath]);
+                    // Delete old image if exist
+                    Storage::disk('public')->delete($oldImage);
+                    // Store new image
+                    $newImage = $itemData['custom_image']->store('order_images/' . $order->id, 'public');
+                    $orderItem->update(['custom_image' => $newImage]);
                 }
             }
             

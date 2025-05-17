@@ -24,6 +24,7 @@ class ProfileController extends Controller
         
         return view('profile.edit', [
             'user' => $user,
+            'orders' => $orders, // Pass orders directly to the view
         ]);
     }
 
@@ -116,7 +117,7 @@ class ProfileController extends Controller
         $user = $request->user();
         
         // Ensure the order belongs to the authenticated user
-        $order = $user->orders()->findOrFail($id);
+        $order = $user->orders()->orderBy('created_at', 'asc')->findOrFail($id);
         $orderItems = $order->orderItems()->with('product')->get();
         
         // Format the data for the frontend
@@ -158,6 +159,8 @@ class ProfileController extends Controller
             'discount' => $order->discount,
             'delivery_address' => $order->delivery_address,
             'shipping_fees' => $shippingFees,
+            'payment_method' => $order->payment_method ?? 'Cash on Delivery',
+            'payment_status' => $order->payment_status ?? 'Pending',
         ];
 
         return response()->json([

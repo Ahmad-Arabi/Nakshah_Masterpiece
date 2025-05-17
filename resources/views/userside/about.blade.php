@@ -34,7 +34,6 @@
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                 <li><a href="#"><i class="fa fa-instagram"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
               </ul>
             </div>
           </div>
@@ -106,7 +105,7 @@
 
     <div class="services">
       <div class="container">
-        <div class="row">
+        <div class="row gy-4">
           <div class="col-md-4">
             <div class="service-item">
               <div class="icon">
@@ -130,18 +129,18 @@
                 <a href="{{ route('user.contactUs') }}" class="filled-button">Contact Us</a>
               </div>
             </div>
-          </div>
+          </div>          
           <div class="col-md-4">
-            {{-- <div class="service-item">
+            <div class="service-item">
               <div class="icon">
-                <i class="fa fa-globe"></i>
+                <i class="fa fa-user-plus"></i>
               </div>
               <div class="down-content">
-                <h4>Worldwide Shipping</h4>
-                <p>We deliver your custom creations straight to your doorstep, anywhere in the world. Your personalized fashion journey is just a click away.</p>
-                <a href="{{ route('about') }}" class="filled-button">Learn More</a>
+                <h4>Join Our Community</h4>
+                <p>Create an account to start your custom designs, place and track orders.</p>
+                <a href="{{ route('register') }}" class="filled-button">Register Now</a>
               </div>
-            </div> --}}
+            </div>
           </div>
         </div>
       </div>

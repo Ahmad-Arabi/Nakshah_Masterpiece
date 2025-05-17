@@ -78,7 +78,7 @@ header {
 }
 .card-img-top {
     height: 180px;
-    object-fit: cover;
+    object-fit: scale-down;
 }
 .product-card:hover {
     transform: translateY(-5px);
@@ -165,7 +165,7 @@ header {
     color: #6c757d;
     font-size: 0.85rem;
     margin-top: -5px;
-    margin-bottom: 8px;
+ 
 }
 
 /* Color circle */
@@ -215,7 +215,7 @@ header {
 /* Carousel styles - updated */
 .carousel-item img {
     height: 160px;
-    object-fit: cover;
+    object-fit: scale-down;
 }
 .featured-carousel .card {
     border: none;
@@ -408,5 +408,21 @@ header {
     .featured-carousel .carousel-item .row > div.col-12 {
         max-width: 100%;
     }
+
+    .color-name {
+    font-size: 0.65rem;
+}
+
+.color-display {
+margin-bottom: 0px;
+}
+
+.featured-carousel .price {
+    font-size: 0.7rem;
+}
+
+.featured-carousel .color-name {
+    font-size: 0.65rem;
+}
 }
 

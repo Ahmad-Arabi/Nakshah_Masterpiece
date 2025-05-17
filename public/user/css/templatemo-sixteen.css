@@ -434,13 +434,10 @@ header .navbar {
 .product-item .down-content h4 {
 	font-size: 17px;
 	color: var(--primary);
-	margin-bottom: 20px;
 }
 
 .product-item .down-content h6 {
-	position: absolute;
-	top: 30px;
-	right: 30px;
+	
 	font-size: 18px;
 	color: var(--text);
 }
@@ -459,8 +456,7 @@ header .navbar {
 }
 
 .product-item .down-content span {
-	position: absolute;
-	right: 30px;
+
 	font-size: 13px;
 	color: var(--accent);
 	font-weight: 500;
@@ -957,14 +953,8 @@ footer .inner-content p a {
 		display: block;
 		margin-bottom: 20px;
 	}
-	.product-item .down-content h4 {
-		margin-bottom: 20px!important;
-	}
-	.product-item .down-content h6 {
-		position: absolute!important;
-		top: 30px!important;
-		right: 30px!important;
-	}
+
+
 	/* .product-item .down-content span {
 		position: absolute!important;
 		right: 30px!important;
@@ -1040,15 +1030,8 @@ footer .inner-content p a {
 
 		padding-bottom: 15px;
 	}
-	.product-item .down-content h4 {
-		margin-bottom: 10px;
-	}
-	.product-item .down-content h6 {
-		position: relative;
-		top: 0;
-		right: 0;
-		margin-bottom: 20px;
-	}
+
+
 	/* .product-item .down-content span {
 		position: relative;
 		right: 0;

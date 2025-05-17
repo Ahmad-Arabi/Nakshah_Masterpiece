@@ -29,6 +29,11 @@ class AdminContactUsController extends Controller
         return view('admin.contact_us.index', compact('messages'));
 
     }
+    
+    public function show($id) {
+        $message = ContactUs::findOrFail($id);
+        return view('admin.contact_us.show', compact('message'));
+    }
 
     public function destroy($id) {
         $message = ContactUs::findOrFail($id);
