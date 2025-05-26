@@ -38,6 +38,10 @@ header {
     vertical-align: middle;
 }
 
+.shopping-cart {
+    color:  rgba(255, 107, 107, 0.5) !important;
+}
+
 /* Product Column */
 .cart-product-image {
     width: 80px;

@@ -1,7 +1,7 @@
 <table class="table table-striped table-hover usersTable">
     <thead>
         <tr class="table-dark">
-            <th scope="col" class="d-none d-md-table-cell">#</th>
+            <th scope="col" class="table-cell">#</th>
             <th scope="col">
                 Customer Email
                 <input type="text" class="form-control form-control-sm table-filter" data-filter="search"
@@ -12,7 +12,7 @@
                 <input type="text" class="form-control form-control-sm table-filter" data-filter="product"
                     placeholder="Search">
             </th>
-            <th scope="col" class="d-none d-lg-table-cell">
+            <th scope="col" class="table-cell">
                 Rating
                 <select class="form-select form-select-sm table-filter" data-filter="rating">
                     <option value="">All</option>
@@ -41,12 +41,12 @@
             @foreach ($reviews as $review)
                 <tr
                     class="{{ $review->is_approved === 1 ? 'table-success' : ($review->is_approved === 0 ? 'table-danger' : '') }}">
-                    <th scope="row" class="d-none d-md-table-cell">
+                    <th scope="row" class="table-cell">
                         {{ ($reviews->currentPage() - 1) * $reviews->perPage() + $loop->iteration }}
                     </th>
                     <td>{{ $review->user->email ?? 'No Customer Assigned' }}</td>
                     <td>{{ $review->product->name ?? 'No Product Assigned' }}</td>
-                    <td class="start-text d-none d-md-table-cell">
+                    <td class="start-text table-cell">
                         {{ str_repeat('⭐️', $review->rating) }}
                     </td>
                     <td>{{ $review->review }}</td>

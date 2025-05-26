@@ -19,7 +19,7 @@
   }
 </style>
 <div class="container py-5 mt-2">
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 row-cols-xl-5 g-4 dashboard_tiles justify-content-center"> 
+    <div class="row row-cols-2  row-cols-lg-4 row-cols-xl-5 g-4 dashboard_tiles justify-content-center"> 
 
         <!-- Total Orders -->
         <a href="{{ route('admin.orders.index') }}" class="col">

@@ -2,7 +2,7 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <h2 class="auth-title">Log In to Nakshah</h2>
+    <h2 class="auth-title">Log In to <span class="accent">Nakshah</span></h2>
     
     <form method="POST" action="{{ route('login') }}">
         @csrf

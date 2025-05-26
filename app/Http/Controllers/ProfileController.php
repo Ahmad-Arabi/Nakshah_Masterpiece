@@ -42,6 +42,9 @@ class ProfileController extends Controller
             'phone' => ['nullable', 'string', 'max:20'],
             'address' => ['nullable', 'string', 'max:100'],
             'profile_picture' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'password' => ['required', 'current_password'],
+            'new_password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'new_password_confirmation' => ['nullable', 'string', 'min:8'],
         ]);
         
         // Handle profile picture upload

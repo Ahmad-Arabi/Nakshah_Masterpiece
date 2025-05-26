@@ -103,17 +103,17 @@
                         <!-- Images -->
                         <div class="col-12 col-md-4">
                             <label for="thumbnail" class="form-label">Thumbnail Image</label>
-                            <input type="file" class="form-control" name="thumbnail" accept=".jpeg,.jpg,.png">
+                            <input type="file" class="form-control" name="thumbnail" accept=".jpeg,.jpg,.png,.webp">
                         </div>
 
                         <div class="col-12 col-md-4">
                             <label for="image1" class="form-label">Product Image 1</label>
-                            <input type="file" class="form-control" name="image1" accept=".jpeg,.jpg,.png">
+                            <input type="file" class="form-control" name="image1" accept=".jpeg,.jpg,.png, .webp">
                         </div>
 
                         <div class="col-12 col-md-4">
                             <label for="image2" class="form-label">Product Image 2</label>
-                            <input type="file" class="form-control" name="image2" accept=".jpeg,.jpg,.png">
+                            <input type="file" class="form-control" name="image2" accept=".jpeg,.jpg,.png, .webp">
                         </div>
 
                     </div> <!-- End of row -->

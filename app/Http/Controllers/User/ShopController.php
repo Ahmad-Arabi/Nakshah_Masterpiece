@@ -17,6 +17,9 @@ class ShopController extends Controller
         // Get the 10 most recent featured and active products
         $featuredProducts = Product::where('isActive', 1)
             ->where('isFeatured', 1)
+            ->whereHas('category', function ($query) {
+                $query->where('isActive', 1);
+            })
             ->latest()
             ->take(10)
             ->with('reviews')
@@ -42,7 +45,10 @@ class ShopController extends Controller
             ->get();
 
         // Query builder for all active products
-        $productsQuery = Product::where('isActive', 1);
+        $productsQuery = Product::where('isActive', 1)
+            ->whereHas('category', function ($query) {
+                $query->where('isActive', 1);
+            });
 
         // Apply filters if they exist
         if ($request->filled('search')) {
@@ -83,7 +89,7 @@ class ShopController extends Controller
         $productsQuery->with(['category', 'reviews', 'productSizes']);
         
         // Get the paginated results
-        $products = $productsQuery->paginate(8)->withQueryString();
+        $products = $productsQuery->paginate(12)->withQueryString();
         
         Log::info('Featured products count: ' . $featuredProducts->count());
         Log::info('Total products count: ' . $products->total());

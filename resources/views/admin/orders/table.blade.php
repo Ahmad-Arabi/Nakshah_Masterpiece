@@ -33,9 +33,10 @@
                   <!-- Order Status -->
                   <td>
                       <span class="badge 
-                          {{ $order->status === 'pending' ? 'bg-warning' : 
-                             ($order->status === 'shipped' ? 'bg-primary' : 
-                             ($order->status === 'delivered' ? 'bg-success' : 'bg-danger')) }}">
+                          {{ $order->status === 'pending' ? 'bg-danger' : 
+                             ($order->status === 'processing' ? 'bg-primary' : 
+                             ($order->status === 'shipped' ? 'bg-warning text-dark' : 
+                             ($order->status === 'delivered' ? 'bg-success' : 'bg-secondary'))) }}">
                           {{ ucfirst($order->status) }}
                       </span>
                   </td>
@@ -44,7 +45,7 @@
                   <td>{{ $order->coupon ? $order->coupon->code : 'No Coupon' }}</td>
 
                   <!-- Actions -->
-                  <td>
+                  <td class="position-relative z-index-1">
                       <div class="dropdown">
                           <button class="drop-border buttonUI" type="button" data-bs-toggle="dropdown">
                               <i class="bi bi-three-dots-vertical"></i>

@@ -15,7 +15,7 @@ header {
 }
 
 .review-card .card-header {
-    background: linear-gradient(45deg, #ec3c76, #ff6a88);
+    background: linear-gradient(90deg, var(--primary), var(--accent));
     color: white;
     border-radius: 10px 10px 0 0;
     padding: 15px 20px;
@@ -74,12 +74,12 @@ header {
 }
 
 .btn-primary {
-    background: linear-gradient(45deg, #ec3c76, #ff6a88);
+    background: linear-gradient(45deg, var(--primary), var(--accent));
     border: none;
 }
 
 .btn-primary:hover {
-    background: linear-gradient(45deg, #d23569, #e75f7d);
+    background: linear-gradient(45deg, var(--accent), var(--primary));
 }
 
 .btn-outline-secondary:hover {

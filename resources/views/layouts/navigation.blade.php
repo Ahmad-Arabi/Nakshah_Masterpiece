@@ -1,13 +1,15 @@
 <header class="">
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('home') }}"><h2>نقشة <em>Nakshah</em></h2></a>
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
+                <img src="{{ asset('images/Arlogo.png') }}" alt="Nakshah Logo" class="img-fluid nav-logo">
+                <h2>نقشة <em>Nakshah</em></h2></a>
             <div class="d-flex align-items-center d-lg-none">
                 @auth
                 <a href="{{ route('cart.index') }}" class="cart-icon-mobile">
                     <i class="fa fa-shopping-cart"></i>
-                    @if(Cookie::has('cart') && count(json_decode(Cookie::get('cart', '[]'), true)) > 0)
-                        <span class="cart-count">{{ count(json_decode(Cookie::get('cart', '[]'), true)) }}</span>
+                    @if($userCartCount > 0)
+                        <span class="cart-count">{{ $userCartCount }}</span>
                     @endif
                 </a>
                 @endauth
@@ -76,8 +78,8 @@
                         @auth
                         <a href="{{ route('cart.index') }}" class="cart-icon-nav me-3 mr-4">
                             <i class="fa fa-shopping-cart"></i>
-                            @if(Cookie::has('cart') && count(json_decode(Cookie::get('cart', '[]'), true)) > 0)
-                                <span class="cart-count">{{ count(json_decode(Cookie::get('cart', '[]'), true)) }}</span>
+                            @if($userCartCount > 0)
+                                <span class="cart-count">{{ $userCartCount }}</span>
                             @endif
                         </a>
                         @endauth

@@ -46,11 +46,24 @@
             }
             
             .brand-name {
-                font-size: 2.25rem;
+                font-size: 2rem;
                 font-weight: 700;
                 color: var(--primary-color);
                 text-decoration: none;
                 letter-spacing: 1px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            .accent {
+                color: var(--accent-color);
+            }
+            
+            .brand-name img {
+                height: 70px;
+                width: auto;
+                vertical-align: middle;
             }
             
             .auth-card {
@@ -291,7 +304,7 @@
                 </div>
             @else
                 <div class="brand-logo">
-                    <a href="/" class="brand-name">نقشة Nakshah</a>
+                    <a href="/" class="brand-name"><img src="{{ asset('images/Arlogo.png') }}" alt="نقشة Nakshah"> <div>نقشة <span class="accent">Nakshah</span></div></a>
                 </div>
                 
                 <div class="auth-card">

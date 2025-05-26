@@ -15,14 +15,40 @@ use Illuminate\Support\Facades\Validator;
 
 class CheckoutController extends Controller
 {
+
+    private function getUserCartItems()
+    {
+        $cartJson = Cookie::get('cart', json_encode([]));
+        $allCartItems = json_decode($cartJson, true);
+        
+        // Filter items for current user
+        $userCartItems = [];
+        $currentUserId = Auth::id();
+        
+        if ($currentUserId) {
+            foreach ($allCartItems as $itemId => $item) {
+                if (isset($item['user_id']) && $item['user_id'] == $currentUserId) {
+                    $userCartItems[$itemId] = $item;
+                }
+            }
+        }
+        
+        return $userCartItems;
+    }
+    
     /**
      * Show the checkout page
      */
     public function index()
     {
-        // Get cart items from cookie
-        $cartItemsJson = Cookie::get('cart', json_encode([]));
-        $cartItems = json_decode($cartItemsJson, true);
+        // Check if user is logged in
+        if (!Auth::check()) {
+            return redirect()->route('login')
+                ->with('error', 'Please login to proceed with checkout');
+        }
+        
+        // Get user-specific cart items
+        $cartItems = $this->getUserCartItems();
         
         // If cart is empty, redirect to cart page
         if (empty($cartItems)) {
@@ -69,6 +95,12 @@ class CheckoutController extends Controller
      */
     public function applyCoupon(Request $request)
     {
+        // Check if user is logged in
+        if (!Auth::check()) {
+            return redirect()->route('login')
+                ->with('error', 'Please login to apply coupons');
+        }
+        
         $request->validate([
             'coupon_code' => 'required|string|max:50'
         ]);
@@ -87,9 +119,8 @@ class CheckoutController extends Controller
             return back()->with('error', 'Invalid or expired coupon code.');
         }
         
-        // Get cart items from cookie
-        $cartItemsJson = Cookie::get('cart', json_encode([]));
-        $cartItems = json_decode($cartItemsJson, true);
+        // Get user-specific cart items
+        $cartItems = $this->getUserCartItems();
         
         // Calculate subtotal
         $subtotal = 0;
@@ -133,19 +164,24 @@ class CheckoutController extends Controller
      */
     public function placeOrder(Request $request)
     {
+        // Check if user is logged in
+        if (!Auth::check()) {
+            return redirect()->route('login')
+                ->with('error', 'Please login to place an order');
+        }
+        
         $validator = Validator::make($request->all(), [
             'delivery_address' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20',
             'payment_method' => 'required|in:cash_on_delivery,credit_card',
         ]);
-        
+        // dd($request->stripeToken);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         
-        // Get cart items from cookie
-        $cartItemsJson = Cookie::get('cart', json_encode([]));
-        $cartItems = json_decode($cartItemsJson, true);
+        // Get user-specific cart items
+        $cartItems = $this->getUserCartItems();
         
         // If cart is empty, redirect to cart page
         if (empty($cartItems)) {
@@ -248,8 +284,8 @@ class CheckoutController extends Controller
 
 
             
-            // Clear cart and checkout session data
-            Cookie::queue(Cookie::forget('cart'));
+            // Clear only current user's cart items
+            $this->clearUserCart();
             session()->forget('checkout');
             
             return redirect()->route('order.confirmation', $order->id)
@@ -258,6 +294,26 @@ class CheckoutController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'There was an issue processing your order. Please try again.');
         }
+    }
+    
+    /**
+     * Clear current user's cart items
+     */
+    private function clearUserCart()
+    {
+        $cartJson = Cookie::get('cart', json_encode([]));
+        $allCartItems = json_decode($cartJson, true);
+        
+        // Remove items for current user only
+        $currentUserId = Auth::id();
+        foreach ($allCartItems as $itemId => $item) {
+            if (isset($item['user_id']) && $item['user_id'] == $currentUserId) {
+                unset($allCartItems[$itemId]);
+            }
+        }
+        
+        // Save back to cookie
+        Cookie::queue('cart', json_encode($allCartItems), 1440);
     }
     
 }

@@ -27,8 +27,10 @@ jQuery( document ).ready(function( $ ) {
 
         if (scroll >= home - header) {
             $("header").addClass("background-header");
+
           } else {
             $("header").removeClass("background-header");
+
           }
           
         });
@@ -101,7 +103,7 @@ jQuery( document ).ready(function( $ ) {
                 dots: true,
                 items: 1,
                 margin: 0,
-                autoplay: false,
+                autoplay: true,
                 smartSpeed: 700,
                 autoplayTimeout: 6000,
                 responsive: {

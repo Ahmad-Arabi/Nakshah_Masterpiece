@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <div class="product-preview mb-4">
                             <div class="row align-items-center">
-                                <div class="col-md-3">
+                                <div class="col-4 col-md-3">
                                     <img src="{{ asset('storage/' . ($product->thumbnail ?? 'images/fallback.jpg')) }}" 
                                          alt="{{ $product->name }}" 
                                          class="img-fluid rounded">

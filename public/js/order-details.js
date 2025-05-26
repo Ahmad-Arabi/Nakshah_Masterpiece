@@ -74,17 +74,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     let statusBadgeClass = '';
                     switch(data.order.status.toLowerCase()) {
-                        case 'completed':
+                        case 'delivered':
                             statusBadgeClass = 'bg-success';
                             break;
                         case 'processing':
                             statusBadgeClass = 'bg-primary';
                             break;
-                        case 'pending':
+                        case 'shipped':
                             statusBadgeClass = 'bg-warning text-dark';
                             break;
-                        case 'cancelled':
-                            statusBadgeClass = 'bg-danger';
+                        case 'pending':
+                            statusBadgeClass = 'bg-info';
                             break;
                         default:
                             statusBadgeClass = 'bg-secondary';

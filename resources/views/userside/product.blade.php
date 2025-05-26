@@ -19,7 +19,7 @@
             <div class="product-main-content ">
                 <div class="row  nav-color-change">
                     <!-- Product Images Column -->
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-6 mb-md-4">
                         <div class="product-image-gallery p-3 rounded shadow-sm bg-white">
                             <div class="product-carousel owl-carousel">
                                 @if ($product->thumbnail)
@@ -47,7 +47,7 @@
                                 @endif
                             </div>
 
-                            <div class="product-thumbnails row mt-3 w-50">
+                            <div class="product-thumbnails row mt-3 w-50 d-none d-md-flex">
                             @if ($product->thumbnail && $product->image1 || $product->thumbnail && $product->image2)
                                     <div class="col-4 col-md-3">
                                         <div class="thumbnail-item active" data-index="0">
@@ -337,7 +337,7 @@
                                     <img src="{{ asset('images/fallback.jpg') }}" alt="{{ $relatedProduct->name }}">
                                 @endif
                             </a>
-                            <div class="down-content p-3">
+                            <div class="down-content p-3 d-flex flex-column">
                                 <a href="{{ route('product.show', $relatedProduct->id) }}">
                                     <h4 class="product-title text-truncate">{{ $relatedProduct->name }}</h4>
                                 </a>
@@ -426,8 +426,12 @@
             // Initialize product image carousel
             var productCarousel = $('.product-carousel').owlCarousel({
                 items: 1,
-                loop: false,
+                loop: true,
                 margin: 0,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                loop: true,
                 dots: false,
                 nav: true,
                 navText: [
@@ -456,6 +460,10 @@
                 loop: true,
                 margin: 15,
                 nav: true,
+                autoplay: true,
+                loop: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
                 navText: [
                     '<i class="fa fa-angle-left"></i>',
                     '<i class="fa fa-angle-right"></i>'
@@ -463,13 +471,15 @@
                 dots: false,
                 responsive: {
                     0: {
-                        items: 1
+                        items: 1,
+                        stagePadding: 25
+                        
                     },
                     576: {
                         items: 2
                     },
                     768: {
-                        items: 3
+                        items: 2
                     },
                     992: {
                         items: 4

@@ -95,7 +95,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="subtotal-col">
-                                                    <span class="subtotal" data-id="{{ $item['id'] }}">{{ $item['subtotal'] }}</span> JOD
+                                                    <span class="subtotal" data-id="{{ $item['id'] }}">{{ number_format($item['subtotal'], 2) }}</span> JOD
                                                 </td>
                                                 <td class="action-col">
                                                     <button type="button" class="btn-remove border-0 bg-transparent p-0" data-bs-toggle="modal" data-bs-target="#deleteModal" data-item-id="{{ $item['id'] }}" data-item-name="{{ $item['name'] }}">
@@ -178,7 +178,7 @@
                                         <h5>Cart Summary</h5>
                                         <div class="d-flex justify-content-between">
                                             <span>Total:</span>
-                                            <strong class="cart-total">{{ $totalPrice }} JOD</strong>
+                                            <strong class="cart-total">{{ number_format($totalPrice, 2) }} JOD</strong>
                                         </div>
                                     </div>
                                 </div>
@@ -212,7 +212,7 @@
             @else
                 <div class="empty-cart text-center py-5">
                     <div class="empty-cart-icon mb-3">
-                        <i class="fa fa-shopping-cart fa-4x text-muted"></i>
+                        <i class="fa fa-shopping-cart fa-3x text-muted shopping-cart"></i>
                     </div>
                     <h3 class="mb-3">Your cart is empty</h3>
                     <p class="mb-4">Looks like you haven't added any products to your cart yet.</p>

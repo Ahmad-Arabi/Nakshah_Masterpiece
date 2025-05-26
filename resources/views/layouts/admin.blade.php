@@ -14,6 +14,9 @@
 </head>
 
 <body>
+    <button type="button" id="sidebarCollapse" class="btn btn-dark">
+        <i class="bi bi-layout-sidebar"></i>
+    </button>
     <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 text-white">
         <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
             <span class="fs-4"><i class="bi bi-toggles"></i> Admin Dashboard</span>
@@ -155,6 +158,7 @@
     </div>
     </div>
     </div>
+    <div id="landscape">Please rotate your device to landscape mode.</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">

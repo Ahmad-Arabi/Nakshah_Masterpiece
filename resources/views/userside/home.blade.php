@@ -93,12 +93,10 @@
         <div class="container-fluid mx-0 px-0">
             <div class="owl-carousel coupons-carousel">
               @foreach ($featuredCoupons as $coupon)
-                <div> Use Code: <span class="coupon">{{ $coupon->code }}</span> for <span class="discount">{{ $coupon->discount }}</span> off of your next purchase! </div>
-                <div> Use Code: <span class="coupon">{{ $coupon->code }}</span> for <span class="discount">{{ $coupon->discount }}</span> off of your next purchase! </div>
-                <div> Use Code: <span class="coupon">{{ $coupon->code }}</span> for <span class="discount">{{ $coupon->discount }}</span> off of your next purchase! </div>
+                <div class="coupon-item"> Use Code <span class="coupon">{{ $coupon->code }}</span> for <span class="discount">{{ $coupon->discount }}</span> off for your next order! </div>
+
               @endforeach
-              <div> Get free shipping on orders over 50 JOD !</div>
-              <div> Get free shipping on orders over 50 JOD !</div>
+              <div class="coupon-item"> Get free shipping on orders over 50 JOD !</div>
             </div>
         </div>
 
@@ -220,6 +218,7 @@
                             <div class="category-image bg-white">
                                 @if ($category->image)
                                     <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
+
                                 @else
                                     <!-- Display a placeholder if no image is available -->
                                     <div class="category-placeholder">
@@ -315,6 +314,7 @@
                             items: 3,
                             margin: 10
                         },
+
                         576: {
                             items: 3
                         },
@@ -334,7 +334,7 @@
                     nav: false,
                     dots: true,
                     dotsEach: true,
-                    autoplay: false,
+                    autoplay: true,
                     autoplayTimeout: 3000,
                     responsive: {
                         0: {
@@ -352,7 +352,7 @@
                             items: 4
                         },
                         1200: {
-                            items: 4
+                            items: 5
                         }
                     }
                 });

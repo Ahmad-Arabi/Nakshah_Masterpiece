@@ -16,7 +16,7 @@
     </div>
 
     <!-- Charts section -->
-    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
         <div class="carousel-inner">
 
             <div class="carousel-item active">
@@ -69,7 +69,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="https://cdn.jsdelivr.net/npm/larapex-charts@latest/dist/larapex-charts.min.js"></script>
-
+<script src="/js/admin.js"></script>
 <!-- Load chart scripts -->
 {!! $ordersChart->script() !!}
 {!! $userGrowthChart->script() !!}

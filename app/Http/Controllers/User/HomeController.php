@@ -31,6 +31,9 @@ class HomeController extends Controller
         
         // Get the 10 most recent active products
         $products = Product::where('isActive', 1)
+            ->whereHas('category', function ($query) {
+                $query->where('isActive', 1);
+            })
             ->latest()
             ->take(10)
             ->get();

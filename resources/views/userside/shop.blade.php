@@ -28,7 +28,7 @@
                             <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                                 <div class="row">
                                     @foreach($chunk as $product)
-                                        <div class="col-5 col-md-4">
+                                        <div class="col-6 col-sm-5 col-lg-3 col-md-4 py-3">
                                             <div class="card h-100 mb-0">
                                                 <a href="{{ route('product.show', $product->id) }}">
                                                     @if($product->thumbnail)
@@ -193,17 +193,17 @@
 
     <!-- Main Products Section -->
     <div class="container my-4 " id="product-grid">
-        <div class="row">
+        <div class="row r">
             <!-- Products Grid -->
             <div class="col-12">
-                <div class="row mb-3">
-                    <div class="col-12">
+                <div class="row mb-3 ">
+                    <div class="col-12 shop-search-header">
                         <h2>All Products</h2>
                         <p>{{ $products->total() }} products found</p>
                     </div>
                 </div>
 
-                <div class="row products-row">
+                <div class="row products-row ">
                     @forelse($products as $product)
                         <div class="col-xl-3 col-lg-4 col-md-4 col-sm-4 col-6 mb-4">
                             <div class="card product-card">
@@ -259,7 +259,7 @@
                                             </div>
                                         @endif
                                         
-                                        <p class="card-text price">{{ $product->price }} JOD</p>
+                                        <p class="card-text price">{{ $product->price }} <span class="currency">JOD</span></p>
                                     </div>
                                     
                                     <a href="{{ route('product.show', $product->id) }}" class="customize-btn text-center d-block">

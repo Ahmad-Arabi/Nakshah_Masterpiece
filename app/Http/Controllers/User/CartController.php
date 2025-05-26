@@ -13,16 +13,66 @@ use Illuminate\Support\Facades\Cookie;
 class CartController extends Controller
 {
     public $cookieExpiraton = 1440; // 1 day in minutes
+    
+
+    private function getUserCartItems()
+    {
+        $cartJson = Cookie::get('cart', json_encode([]));
+        $allCartItems = json_decode($cartJson, true);
+        
+        // Filter items for current user
+        $userCartItems = [];
+        $currentUserId = Auth::id();
+        
+        if ($currentUserId) {
+            foreach ($allCartItems as $itemId => $item) {
+                if (isset($item['user_id']) && $item['user_id'] == $currentUserId) {
+                    $userCartItems[$itemId] = $item;
+                }
+            }
+        }
+        
+        return $userCartItems;
+    }
+    
+    /**
+     * Save cart items back to cookie
+     */
+    private function saveCartToCookie($userCartItems)
+    {
+        // Get all cart items from cookie
+        $cartJson = Cookie::get('cart', json_encode([]));
+        $allCartItems = json_decode($cartJson, true);
+        
+        // Remove old items for current user
+        $currentUserId = Auth::id();
+        foreach ($allCartItems as $itemId => $item) {
+            if (isset($item['user_id']) && $item['user_id'] == $currentUserId) {
+                unset($allCartItems[$itemId]);
+            }
+        }
+        
+        // Add updated user items
+        $allCartItems = array_merge($allCartItems, $userCartItems);
+        
+        // Save back to cookie
+        Cookie::queue('cart', json_encode($allCartItems), $this->cookieExpiraton);
+    }
+    
     /**
      * Display the cart contents
      */
     public function index()
     {
-        // Get cart items from session
-        $cartItemsJson = Cookie::get('cart', json_encode([])); 
-        $cartItems = json_decode($cartItemsJson, true);
-
+        // Check if user is logged in
+        if (!Auth::check()) {
+            return redirect()->route('login')
+                ->with('error', 'Please login to view your cart');
+        }
+        
+        $cartItems = $this->getUserCartItems();
         $totalPrice = $this->calculateTotal($cartItems);
+        
         return view('userside.cart', compact('cartItems', 'totalPrice'));
     }
 
@@ -89,9 +139,10 @@ class CartController extends Controller
             // Generate a unique cart item ID
             $cartItemId = uniqid();
             
-            // Prepare cart item data
+            // Prepare cart item data with user ID
             $cartItem = [
                 'id' => $cartItemId,
+                'user_id' => Auth::id(), // Add user ID to cart item
                 'product_id' => $product->id,
                 'name' => $product->name,
                 'price' => $product->price,
@@ -107,14 +158,14 @@ class CartController extends Controller
                 'subtotal' => $product->price * $request->quantity,
             ];
             
-            // Get current cart or initialize empty array
-            $cartJson = Cookie::get('cart', json_encode([])); 
-            $cart = json_decode($cartJson, true);
-            // Add item to cart
-            $cart[$cartItemId] = $cartItem;
+            // Get current user's cart items
+            $userCartItems = $this->getUserCartItems();
             
-            // Save cart to session
-            Cookie::queue('cart', json_encode($cart), $this->cookieExpiraton); // 1 day expiration
+            // Add item to user's cart
+            $userCartItems[$cartItemId] = $cartItem;
+            
+            // Save cart to cookie
+            $this->saveCartToCookie($userCartItems);
             
             Log::info('Item added to cart', ['user' => Auth::id(), 'product' => $product->id]);
             
@@ -131,17 +182,26 @@ class CartController extends Controller
      */
     public function updateQuantity(Request $request)
     {
+        // Check if user is logged in
+        if (!Auth::check()) {
+            return response()->json(['success' => false, 'message' => 'Please login first']);
+        }
+        
         $request->validate([
             'item_id' => 'required|string',
             'quantity' => 'required|integer|min:1',
         ]);
         
-        $cartJson = Cookie::get('cart', json_encode([])); 
-        $cart = json_decode($cartJson, true);
+        $userCartItems = $this->getUserCartItems();
         
-        if (isset($cart[$request->item_id])) {
+        if (isset($userCartItems[$request->item_id])) {
+            // Verify this item belongs to the current user
+            if ($userCartItems[$request->item_id]['user_id'] != Auth::id()) {
+                return response()->json(['success' => false, 'message' => 'Unauthorized']);
+            }
+            
             // Get product size to check stock
-            $productSize = ProductSize::find($cart[$request->item_id]['size_id']);
+            $productSize = ProductSize::find($userCartItems[$request->item_id]['size_id']);
             
             if ($productSize && $request->quantity > $productSize->stock) {
                 return response()->json([
@@ -152,21 +212,21 @@ class CartController extends Controller
             }
             
             // Update quantity and subtotal
-            $cart[$request->item_id]['quantity'] = $request->quantity;
-            $cart[$request->item_id]['subtotal'] = $cart[$request->item_id]['price'] * $request->quantity;
+            $userCartItems[$request->item_id]['quantity'] = $request->quantity;
+            $userCartItems[$request->item_id]['subtotal'] = $userCartItems[$request->item_id]['price'] * $request->quantity;
             
-
-            Cookie::queue('cart', json_encode($cart), $this->cookieExpiraton);
-            $totalPrice = $this->calculateTotal($cart);
+            // Save updated cart
+            $this->saveCartToCookie($userCartItems);
+            $totalPrice = $this->calculateTotal($userCartItems);
             
             return response()->json([
                 'success' => true,
-                'subtotal' => number_format($cart[$request->item_id]['subtotal'], 2),
+                'subtotal' => number_format($userCartItems[$request->item_id]['subtotal'], 2),
                 'total' => number_format($totalPrice, 2)
             ]);
         }
         
-        return response()->json(['success' => false]);
+        return response()->json(['success' => false, 'message' => 'Item not found']);
     }
 
     /**
@@ -174,11 +234,23 @@ class CartController extends Controller
      */
     public function removeItem($itemId)
     {
-        $cart = json_decode(Cookie::get('cart', []), true);
+        // Check if user is logged in
+        if (!Auth::check()) {
+            return redirect()->route('login')
+                ->with('error', 'Please login to manage your cart');
+        }
         
-        if (isset($cart[$itemId])) {
-            unset($cart[$itemId]);
-            Cookie::queue('cart', json_encode($cart), $this->cookieExpiraton);
+        $userCartItems = $this->getUserCartItems();
+        
+        if (isset($userCartItems[$itemId])) {
+            // Verify this item belongs to the current user
+            if ($userCartItems[$itemId]['user_id'] != Auth::id()) {
+                return redirect()->route('cart.index')->with('error', 'Unauthorized action');
+            }
+            
+            unset($userCartItems[$itemId]);
+            $this->saveCartToCookie($userCartItems);
+            
             return redirect()->route('cart.index')->with('success', 'Item removed from cart successfully!');
         }
         
@@ -186,11 +258,19 @@ class CartController extends Controller
     }
     
     /**
-     * Clear the entire cart
+     * Clear the entire cart for current user
      */
     public function clearCart()
     {
-        Cookie::queue(Cookie::forget('cart'));
+        // Check if user is logged in
+        if (!Auth::check()) {
+            return redirect()->route('login')
+                ->with('error', 'Please login to manage your cart');
+        }
+        
+        // Clear only current user's cart items
+        $this->saveCartToCookie([]);
+        
         return redirect()->route('cart.index')->with('success', 'Cart cleared successfully!');
     }
     

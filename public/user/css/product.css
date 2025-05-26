@@ -378,6 +378,7 @@ header {
     border-top: none;
     border-bottom-left-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
+    background: #f9f9f9;
 }
 
 /* Reviews */
@@ -543,6 +544,10 @@ header {
 .customize-btn:hover {
     background-color: #3c2e77;
     color: white;
+}
+
+.price-small {
+    text-align: end;
 }
 
 /* Responsive styles for product cards */

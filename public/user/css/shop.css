@@ -73,7 +73,7 @@ header {
 .product-card {
     transition: transform 0.3s ease;
     height: 100%;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.3);
     border-radius: 5px;
 }
 .card-img-top {
@@ -82,10 +82,10 @@ header {
 }
 .product-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 .customize-btn {
-    background-color: var(--primary);
+    background-color: var(--accent);
     color: white;
     border: none;
     padding: 8px 15px;
@@ -96,7 +96,7 @@ header {
     margin-top: 10px;
 }
 .customize-btn:hover {
-    background-color: var(--accent);
+    background-color: var(--primary);
     color: var(--light);
     transform: scale(1.03);
 }
@@ -120,6 +120,10 @@ header {
 
 .price {
     font-weight: bold;
+}
+
+.currency {
+    color: var(--accent);
 }
 
 .filter-form {
@@ -165,21 +169,19 @@ header {
     color: #6c757d;
     font-size: 0.85rem;
     margin-top: -5px;
- 
 }
 
 /* Color circle */
 .color-display {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
 }
 .color-circle {
-    width: 15px;
-    height: 15px;
     border-radius: 50%;
     margin-right: 6px;
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 10px;
+    height: 10px;
 }
 .color-name {
     font-size: 0.85rem;
@@ -215,13 +217,14 @@ header {
 /* Carousel styles - updated */
 .carousel-item img {
     height: 160px;
-    object-fit: scale-down;
+    object-fit: cover;
+    border-radius: 5px;
 }
 .featured-carousel .card {
     border: none;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    box-shadow: 1px 4px 7px 2px rgba(0, 0, 0, 0.5);
 }
-.carousel-control-next, 
+.carousel-control-next,
 .carousel-control-prev {
     display: none;
 }
@@ -248,12 +251,15 @@ header {
 }
 .featured-carousel .card-body {
     padding: 0.5rem;
+    background: var(--background);
+    border-radius: 5px 5px;
 }
 .featured-carousel .card-title {
     font-size: 0.9rem;
 }
 .featured-carousel .price {
     font-size: 0.9rem;
+    color: var(--primary);
 }
 .featured-carousel .color-name,
 .featured-carousel .category-text,
@@ -285,72 +291,9 @@ header {
     border-bottom: none;
 }
 
-/* Make featured carousel more responsive */
-@media (max-width: 767px) {
-    .featured-carousel .col-md-3 {
-        width: 50%; /* Force 2 cards per row on mobile */
-        float: left;
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-    .carousel-item img {
-        height: 120px;
-    }
-    .featured-carousel .stars li i {
-        font-size: 0.7rem;
-    }
-    .featured-carousel .customize-btn {
-        padding: 4px 8px;
-        font-size: 0.8rem;
-    }
-    .featured-carousel .card-title {
-        font-size: 0.8rem;
-    }
-    .featured-carousel .card {
-        margin-bottom: 10px;
-    }
-    .featured-carousel .card-body {
-        padding: 0.4rem;
-    }
-}
-
 /* Force carousel to maintain horizontal layout on mobile */
 .carousel-inner .carousel-item {
     float: none;
-}
-
-/* Adjust carousel height for mobile */
-@media (max-width: 575px) {
-    #featuredCarousel {
-        padding-bottom: 40px;
-    }
-    .featured-carousel .col-md-3 {
-        padding-left: 3px;
-        padding-right: 3px;
-    }
-    .carousel-item img {
-        height: 100px;
-    }
-    .featured-carousel .card-title {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-}
-
-@media (max-width: 767px) {
-    .filter-form {
-        flex-direction: column;
-    }
-    .filter-form .form-group {
-        width: 100%;
-        margin-bottom: 5px;
-        flex: 1 1 auto;
-    }
-
-    .form-control {
-       font-size: 0.8rem;
-    }
 }
 
 /* Fix for dropdown option colors */
@@ -391,10 +334,97 @@ header {
     flex: 0 0 auto;
 }
 
-/* Control card width based on screen size */
-@media (min-width: 768px) {
-    .featured-carousel .carousel-item .row > div.col-md-4 {
-        max-width: 25%;
+/* Make featured carousel more responsive */
+@media (max-width: 767px) {
+    .featured-carousel .col-md-3 {
+        width: 50%; /* Force 2 cards per row on mobile */
+        float: left;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .carousel-item img {
+        height: 120px;
+    }
+    .featured-carousel .stars li i {
+        font-size: 0.7rem;
+    }
+    .featured-carousel .customize-btn {
+        padding: 4px 8px;
+        font-size: 0.8rem;
+    }
+    .featured-carousel .card-title {
+        font-size: 0.8rem;
+    }
+    .featured-carousel .card {
+        margin-bottom: 10px;
+    }
+    .featured-carousel .card-body {
+        padding: 0.4rem;
+    }
+
+    .filter-form {
+        flex-direction: column;
+    }
+    .filter-form .form-group {
+        width: 100%;
+        margin-bottom: 5px;
+        flex: 1 1 auto;
+    }
+
+    .form-control {
+        font-size: 0.8rem;
+    }
+}
+
+/* Adjust carousel height for mobile */
+@media (max-width: 575px) {
+    #featuredCarousel {
+        padding-bottom: 40px;
+    }
+    .featured-carousel .col-md-3 {
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+    .carousel-item img {
+        height: 100px;
+    }
+    .featured-carousel .card-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .card-img-top {
+        height: 100px;
+    }
+
+    #product-grid .stars-rating {
+        scale: 0.8;
+        margin-left: -19px;
+    }
+
+    .card-title {
+        font-size: 0.85rem;
+    }
+
+    .category-text {
+        font-size: 0.75rem;
+    }
+
+    .customize-btn {
+        font-size: 0.75rem;
+    }
+
+    .shop-search-header h2 {
+        font-size: 1rem;
+    }
+
+    .shop-search-header p {
+        font-size: 0.7rem;
+    }
+
+    .filter-section h4 {
+        font-size: 1.2em;
     }
 }
 
@@ -410,19 +440,18 @@ header {
     }
 
     .color-name {
-    font-size: 0.65rem;
-}
+        font-size: 0.65rem;
+    }
 
-.color-display {
-margin-bottom: 0px;
-}
+    .featured-carousel .price {
+        font-size: 0.8rem;
+    }
 
-.featured-carousel .price {
-    font-size: 0.7rem;
-}
+    .featured-carousel .color-name {
+        font-size: 0.65rem;
+    }
 
-.featured-carousel .color-name {
-    font-size: 0.65rem;
+    .currency {
+        font-size: 0.5rem;
+    }
 }
-}
-

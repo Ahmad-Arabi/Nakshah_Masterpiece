@@ -65,3 +65,4 @@
     </table>
 </div>
 @endsection
+<script src="/js/admin.js"></script>

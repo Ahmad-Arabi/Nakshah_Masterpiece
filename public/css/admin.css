@@ -6,9 +6,14 @@
 }
 
 :root {
-    --main-color: #4b3f72;
+    --main-color: rgb(75, 63, 114);
     --accent-color: #ff6b6b;
     --secondary-color: rgb(181, 229, 231);
+    ---main-dark: rgb(35 29 55);
+}
+
+.table-dark {
+    --bs-table-bg: var(--main-color);
 }
 
 .drop-border {
@@ -20,7 +25,6 @@ body {
     background-color: #e8e8e8;
 }
 
-
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
     background-color: var(--main-color);
@@ -30,6 +34,15 @@ body {
     background-color: var(--main-color);
     border-color: var(--main-color);
     box-shadow: 0 2px 5px rgba(25, 25, 25, 0.4);
+}
+
+#landscape {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 }
 
 .btn-secondary,
@@ -61,8 +74,6 @@ body {
 .text-primary {
     color: var(--main-color) !important;
 }
-
-
 
 .review_actions .approve-action.dropdown-item:hover,
 .approve-action.dropdown-item:focus {
@@ -155,7 +166,22 @@ body {
     top: 0;
     z-index: 1000;
     transition: all 0.3s;
-    background-color: #212529;
+    background-color: rgb(35 29 55);
+}
+
+.dropdown-menu-dark{
+    background-color: var(--main-color);
+    color: white;
+}
+.dropdown-menu-dark .dropdown-item.active, .dropdown-menu-dark .dropdown-item:active {
+    background-color: var(--accent-color);
+    color: var(--main-color);
+}
+
+.btn-check:active+.btn-primary, .btn-check:checked+.btn-primary, .btn-primary.active, .btn-primary:active, .show>.btn-primary.dropdown-toggle, .btn-primary:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--main-color);
 }
 
 #content {
@@ -195,9 +221,12 @@ body {
     table-layout: auto;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     #sidebar {
         margin-left: -280px;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+         touch-action: manipulation;
     }
 
     #content {
@@ -239,9 +268,8 @@ body {
     text-decoration: none;
     color: inherit;
     display: flex;
-    justify-content: center; 
-    flex-wrap: wrap; 
-
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .carousel-control-prev-icon,
@@ -279,9 +307,9 @@ h3:hover {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    box-shadow: rgba(74, 111, 165, 0.4) 0px 2px 4px,
-        rgba(74, 111, 165, 0.3) 0px 7px 13px -3px,
-        rgba(74, 111, 165, 0.2) 0px -3px 0px inset;
+    box-shadow: rgba(75, 63, 114, 0.6) 0px 2px 4px,
+        rgba(75, 63, 114, 0.3) 0px 7px 13px -3px,
+        rgba(75, 63, 114, 0.2) 0px -3px 0px inset;
     animation: rotate 2s infinite linear;
 }
 
@@ -339,11 +367,29 @@ h3:hover {
 }
 
 .accordion-body {
-    background: transparent !important; 
-    
+    background: transparent !important;
 }
 
-.dropdown-item.active, .dropdown-item:active {
-    background-color:  transparent;
+.dropdown-item.active,
+.dropdown-item:active {
+    background-color: var(--main-color);
+}
 
+@media (orientation: portrait) and (max-width: 992px) {
+    #content {
+        display: none;
+    }
+
+    #landscape {
+        display: block;
+    }
+}
+.table-responsive {
+    overflow: visible !important;
+}
+.dropdown-menu {
+    position: absolute !important;
+    z-index: 1050;
+    white-space: nowrap;
+    transform: translateY(0); /* Ensure it renders correctly */
 }

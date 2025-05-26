@@ -11,6 +11,8 @@
         rel="stylesheet">
 
     <title>Nakshah</title>
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -82,14 +84,17 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="footer-about">
-                        <h4>نقشة <span>Nakshah</span></h4>
+                        <div class="brand">
+                            <img src="{{ asset('images/Arlogo.png') }}" alt="Nakshah Logo" class="img-thumbnail logo">
+                            <h4>نقشة <span>Nakshah</span></h4>
+                        </div>
                         <p>Nakshah is your premier destination for authentic Arabic art and calligraphy. Discover
                             handcrafted treasures that blend traditional artistry with modern design.</p>
                         <ul class="social-icons">
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                             <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            {{-- <li><a href="#"><i class="fa fa-linkedin"></i></a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -107,9 +112,11 @@
                 <div class="col-md-4">
                     <div class="footer-contact">
                         <h4>Contact Us</h4>
-                        <p><i class="fa fa-map-marker"></i> Amman, Jordan</p>
-                        <p><i class="fa fa-phone"></i> +962 78 757 9985</p>
-                        <p><i class="fa fa-envelope"></i> info@nakshah.com</p>
+                        <div class="contact-info">
+                            <p><i class="fa fa-map-marker"></i> Amman, Jordan</p>
+                            <p><i class="fa fa-phone"></i> +962 78 757 9985</p>
+                            <p><i class="fa fa-envelope"></i> info@nakshah.com</p>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-12">

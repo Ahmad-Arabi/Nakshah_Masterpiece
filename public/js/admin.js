@@ -439,49 +439,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // <!-- Sidebar Toggle Script -->
 
-// document.addEventListener('DOMContentLoaded', function() {
-//     const sidebarCollapse = document.getElementById('sidebarCollapse');
-//     const sidebar = document.getElementById('sidebar');
-//     const content = document.getElementById('content');
+document.addEventListener('DOMContentLoaded', function() {
+    const sidebarCollapse = document.getElementById('sidebarCollapse');
+    const sidebar = document.getElementById('sidebar');
+    const content = document.getElementById('content');
 
-//     sidebarCollapse.addEventListener('click', function() {
-//         sidebar.classList.toggle('active');
-//         if (sidebar.classList.contains('active')) {
-//             content.style.marginLeft = '280px';
-//             content.style.width = 'calc(100% - 280px)';
-//         } else {
-//             content.style.marginLeft = '0';
-//             content.style.width = '100%';
-//         }
-//     });
+    sidebarCollapse.addEventListener('click', function() {
+        sidebar.classList.toggle('active');
+        if (sidebar.classList.contains('active')) {
+            content.style.marginLeft = '280px';
+            content.style.width = 'calc(100% - 280px)';
+        } else {
+            content.style.marginLeft = '0';
+            content.style.width = '100%';
+        }
+    });
 
-//     // Check window size on load and resize
-//     function checkSize() {
-//         if (window.innerWidth <= 768) {
-//             sidebar.classList.remove('active');
-//             content.style.marginLeft = '0';
-//             content.style.width = '100%';
-//         } else {
-//             sidebar.classList.add('active');
-//             content.style.marginLeft = '280px';
-//             content.style.width = 'calc(100% - 280px)';
-//         }
-//     }
+    // Check window size on load and resize
+    function checkSize() {
+        if (window.innerWidth <= 992) {
+            sidebar.classList.remove('active');
+            content.style.marginLeft = '0';
+            content.style.width = '100%';
+        } else {
+            sidebar.classList.add('active');
+            content.style.marginLeft = '280px';
+            content.style.width = 'calc(100% - 280px)';
+        }
+    }
 
-//     // Initial check
-//     checkSize();
+    // Initial check
+    checkSize();
 
-//     // Listen for window resize
-//     window.addEventListener('resize', checkSize);
+    // Listen for window resize
+    window.addEventListener('resize', checkSize);
 
-//     // Make sure all tables are wrapped in table-responsive
-//     document.querySelectorAll('table').forEach(function(table) {
-//         if (!table.parentElement.classList.contains('table-responsive')) {
-//             const wrapper = document.createElement('div');
-//             wrapper.classList.add('table-responsive');
-//             table.parentNode.insertBefore(wrapper, table);
-//             wrapper.appendChild(table);
-//         }
-//     });
-// });
+    // Make sure all tables are wrapped in table-responsive
+    document.querySelectorAll('table').forEach(function(table) {
+        if (!table.parentElement.classList.contains('table-responsive')) {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add('table-responsive');
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+        }
+    });
+});
 

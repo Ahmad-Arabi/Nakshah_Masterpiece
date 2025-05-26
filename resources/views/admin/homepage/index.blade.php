@@ -10,7 +10,7 @@
 
 @section('content')
                   {{-- Table --}}
-              <div class="container" style="max-height: 100%">
+              <div class="container">
                 <div class="my-3">
                   <h3>
                     <i class="bi bi-speedometer2"></i>
@@ -20,7 +20,7 @@
                 
                 <!-- Spinner -->
                 <div id="spinner" class="text-center my-5">
-                  <div class="spinner-border text-primary" role="status">
+                  <div class="loader text-primary" role="status">
                       <span class="visually-hidden">Loading...</span>
                   </div>
                 </div>

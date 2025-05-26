@@ -133,3 +133,4 @@
         </div>
     </div>
 @endsection
+<script src="/js/admin.js"></script>

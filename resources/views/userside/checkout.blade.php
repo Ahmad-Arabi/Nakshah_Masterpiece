@@ -230,7 +230,7 @@
 
             function createToken() {
                 stripe.createToken(cardElement).then(function(result) {
-                    console.log(result);
+                    // console.log(result);
                     if (result.token) {
 
                         document.getElementById('stripeToken').value = result.token.id;
