@@ -103,7 +103,7 @@ jQuery( document ).ready(function( $ ) {
                 dots: true,
                 items: 1,
                 margin: 0,
-                autoplay: true,
+                autoplay: false,
                 smartSpeed: 700,
                 autoplayTimeout: 6000,
                 responsive: {
@@ -126,6 +126,33 @@ jQuery( document ).ready(function( $ ) {
                 }
             });
         }
+
+        if ($('.coupons-carousel').length) {
+                $(".coupons-carousel").owlCarousel({
+                    loop: true,
+                    autoplay: true,
+                    autoplayTimeout: 3000,
+                    autoplayHoverPause: true,
+                    nav: false,
+                    dots: false, 
+                    margin: 50, 
+                    center: true,
+                    items: 2,
+                    responsive: {
+                        0: {
+                            items: 1
+                        },
+                        600: {
+                            items: 1
+                        },
+                        1000: {
+                            items: 2
+                        }
+                    } 
+
+                });
+            };
+        
 
         $(".Modern-Slider").slick({
             autoplay:true,

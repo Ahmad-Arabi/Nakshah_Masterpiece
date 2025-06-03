@@ -32,6 +32,7 @@ abstract class Controller extends BaseController
                 $userCartCount++;
             }
         }
+        
 
         return $userCartCount;
     }

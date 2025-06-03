@@ -1,3 +1,4 @@
+@section('page_title', 'My Cart')
 <x-app-layout>
     <div class="cart-page">
         <div class="container py-5 mt-3 mb-5">

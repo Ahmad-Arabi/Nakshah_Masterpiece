@@ -1,6 +1,7 @@
+@section('page_title', 'Shop')
 <x-app-layout>
     <!-- Featured Products Carousel Section -->
-    <div class="featured-bg py-5  nav-color-change">
+    {{-- <div class="featured-bg py-5  nav-color-change">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -116,10 +117,10 @@
                 </a>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Horizontal Filters - Now directly below featured section without margins -->
-    <div class="filter-section">
+    <div class="filter-section nav-color-change mt-3">
         <div class="container-fluid ">
             <h4 class="mb-3">Find Your Product</h4>
 

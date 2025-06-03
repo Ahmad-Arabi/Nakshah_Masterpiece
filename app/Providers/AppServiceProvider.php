@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
+use App\Models\Coupon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,8 +39,20 @@ class AppServiceProvider extends ServiceProvider
                     }
                 }
             }
+
+            $featuredCoupons = Coupon::where('is_featured', 1)->get();
+
+                foreach ($featuredCoupons as $coupon) {
+                    if ($coupon->discount_type === 'percentage') {
+                        $coupon->discount = $coupon->discount . '%';
+                    } else {
+                        $coupon->discount =  $coupon->discount . ' JOD';
+                    }
+                }
             
-            $view->with('userCartCount', $userCartCount);
+            $view->with('userCartCount', $userCartCount)
+                 ->with('featuredCoupons', $featuredCoupons);
         });
     }
+    
 }

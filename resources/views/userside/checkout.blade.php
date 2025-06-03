@@ -1,6 +1,7 @@
+@section('page_title', 'Checkout')
 <x-app-layout>
     <div class="checkout-page">
-        <div class="container mt-3 mb-5">
+        <div class="container mt-5 mb-5">
             <h1 class="checkout-title mb-4">Checkout</h1>
 
             @if (session('success'))

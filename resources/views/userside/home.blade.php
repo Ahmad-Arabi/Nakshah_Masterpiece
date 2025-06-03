@@ -1,3 +1,4 @@
+@section('page_title', 'Home')
 @push('styles')
     <style>
         /* Responsive fixes for carousel items */
@@ -89,16 +90,7 @@
                 </div>
             </div>
         </div>
-        <!-- Banner Ends Here -->
-        <div class="container-fluid mx-0 px-0">
-            <div class="owl-carousel coupons-carousel">
-              @foreach ($featuredCoupons as $coupon)
-                <div class="coupon-item"> Use Code <span class="coupon">{{ $coupon->code }}</span> for <span class="discount">{{ $coupon->discount }}</span> off for your next order! </div>
-
-              @endforeach
-              <div class="coupon-item"> Get free shipping on orders over 50 JOD !</div>
-            </div>
-        </div>
+        
 
     </div>
 
@@ -247,7 +239,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="section-heading text-center">
-                        <h2>Why Choose Nakshah</h2>
+                        <h2>Why Choose {{ env('APP_NAME') }} </h2>
                         <p>Your vision, our craftsmanship. Perfect for every occasion.</p>
                     </div>
                 </div>
@@ -307,7 +299,7 @@
                     nav: false,
                     dots: true,
                     dotsEach: true,
-                    autoplay: true,
+                    autoplay: false,
                     autoplayTimeout: 3000,
                     responsive: {
                         0: {
@@ -334,7 +326,7 @@
                     nav: false,
                     dots: true,
                     dotsEach: true,
-                    autoplay: true,
+                    autoplay: false,
                     autoplayTimeout: 3000,
                     responsive: {
                         0: {
@@ -360,30 +352,6 @@
 
             });
 
-            $(document).ready(function() {
-                $(".owl-carousel").owlCarousel({
-                    loop: true,
-                    autoplay: true,
-                    autoplayTimeout: 3000,
-                    nav: false,
-                    dots: false, 
-                    margin: 50,
-                    center: true,
-                    items: 3,
-                    responsive: {
-                        0: {
-                            items: 1
-                        },
-                        600: {
-                            items: 1
-                        },
-                        1000: {
-                            items: 2
-                        }
-                    } 
-
-                });
-            });
         </script>
     @endpush
 </x-app-layout>

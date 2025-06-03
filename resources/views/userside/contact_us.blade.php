@@ -1,3 +1,4 @@
+@section('page_title', 'Conatct Us')
 <x-app-layout>
     <!-- Page Content -->
     <div class="page-heading contact-heading header-text nav-color-change">
@@ -34,7 +35,7 @@
               <div class="store-info">
                 <p><i class="fa fa-clock-o"></i> <strong>Opening Hours:</strong> 10:00 AM - 10:00 PM, Daily</p>
                 <p><i class="fa fa-phone"></i> <strong>Call Us:</strong> +962-78-757-9985</p>
-                <p><i class="fa fa-envelope"></i> <strong>Email:</strong> contact@nakshah.com</p>
+                <p><i class="fa fa-envelope"></i> <strong>Email:</strong> {{env('MAIL_FROM_ADDRESS')}}</p>
               </div>
               
               <p>Connect with us on social media for the latest trends, promotions, and fashion inspiration.</p>

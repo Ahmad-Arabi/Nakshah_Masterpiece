@@ -1,3 +1,4 @@
+@section('page_title', 'My Profile')
 <x-app-layout>
     <style>
         header {

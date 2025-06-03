@@ -157,7 +157,7 @@ header {
     margin-right: 2px;
 }
 .stars li i {
-    color: #f9a825;
+    color: var(--accent);
 }
 .review-count {
     font-size: 12px;

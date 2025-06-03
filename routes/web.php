@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\AdminProductsController;
 use App\Http\Controllers\Admin\AdminContactUsController;
 use App\Http\Controllers\Admin\AdminCategoriesController;
 
+
 Route::get('/',[HomeController::class, 'index'])->name('home');
 
 // User Shop Routes

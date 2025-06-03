@@ -164,7 +164,7 @@ class CheckoutController extends Controller
      */
     public function placeOrder(Request $request)
     {
-        // Check if user is logged in
+        // Check user 
         if (!Auth::check()) {
             return redirect()->route('login')
                 ->with('error', 'Please login to place an order');
@@ -180,10 +180,9 @@ class CheckoutController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         
-        // Get user-specific cart items
+        // Get cart items
         $cartItems = $this->getUserCartItems();
         
-        // If cart is empty, redirect to cart page
         if (empty($cartItems)) {
             return redirect()->route('cart.index')
                 ->with('info', 'Your cart is empty. Please add some products before checkout.');
@@ -195,7 +194,7 @@ class CheckoutController extends Controller
             $subtotal += $item['subtotal'];
         }
         
-        // Get applied coupon and discount from session
+        // Get applied coupon
         $discount = session('checkout.discount', 0);
         $appliedCoupon = session('checkout.coupon');
         $totalPrice = $subtotal - $discount;
@@ -226,7 +225,6 @@ class CheckoutController extends Controller
             
             // Add each item to the order
             foreach ($cartItems as $item) {
-                // Create the order item
                 $orderItem = OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item['product_id'],
@@ -238,14 +236,14 @@ class CheckoutController extends Controller
                     'custom_text_color' => $item['custom_text_color'],
                 ]);
                 
-                // Handle custom image if present
+                //custom image 
                 if (!empty($item['custom_image'])) {
-                    // Move image from temp storage to permanent storage
+                    
                     if (Storage::disk('public')->exists($item['custom_image'])) {
                         $newPath = 'order_images/' . $order->id . '/' . basename($item['custom_image']);
                         Storage::disk('public')->copy($item['custom_image'], $newPath);
                         
-                        // Update the order item with the new path
+                       
                         $orderItem->custom_image = $newPath;
                         $orderItem->save();
                         
@@ -273,7 +271,6 @@ class CheckoutController extends Controller
                     'description' => 'Nakshah Order#' . $order->id . ' Payment',    
                 ]);
 
-                // If charge fails, throw an exception
                 if (!$charge) {
                     throw new \Exception("Stripe charge failed");
                 }
@@ -283,8 +280,6 @@ class CheckoutController extends Controller
             }
 
 
-            
-            // Clear only current user's cart items
             $this->clearUserCart();
             session()->forget('checkout');
             
@@ -296,9 +291,7 @@ class CheckoutController extends Controller
         }
     }
     
-    /**
-     * Clear current user's cart items
-     */
+
     private function clearUserCart()
     {
         $cartJson = Cookie::get('cart', json_encode([]));

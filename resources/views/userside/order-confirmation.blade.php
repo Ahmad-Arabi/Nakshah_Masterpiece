@@ -1,6 +1,7 @@
+@section('page_title', 'Order# ' . $order->id . ' Confirmation')
 <x-app-layout>
     <div class="order-confirmation-page">
-        <div class="container mt-3 mb-5">
+        <div class="container mt-5 mb-5">
             <div class="text-center mb-5">
                 <div class="success-icon mb-4">
                     <i class="fa fa-check-circle text-success" style="font-size: 5rem;"></i>

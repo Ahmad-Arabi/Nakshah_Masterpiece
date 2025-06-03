@@ -169,7 +169,12 @@ class CartController extends Controller
             
             Log::info('Item added to cart', ['user' => Auth::id(), 'product' => $product->id]);
             
-            return redirect()->route('cart.index')->with('success', 'Product added to cart successfully!');
+            if($request->action_type == "buyNow") {
+                return redirect()->route('checkout');
+            } else {
+
+                return redirect()->back()->with('success', 'Product added to cart successfully!');
+            }
             
         } catch (\Exception $e) {
             Log::error('Error adding item to cart: ' . $e->getMessage());

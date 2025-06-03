@@ -1,3 +1,4 @@
+@section('page_title', 'About Us')
 <x-app-layout>
 <div class="page-heading about-heading header-text nav-color-change">
       <div class="container">
@@ -28,7 +29,7 @@
           <div class="col-md-6">
             <div class="left-content">
               <h4>Express Your Unique Style</h4>
-              <p>At Nakshah, we believe that fashion should be as individual as you are. Founded with a passion for self-expression through clothing, we've created a platform where you can design and customize your own unique garments and accessories that truly represent your personality.</p>
+              <p>At {{env('APP_NAME')}}, we believe that fashion should be as individual as you are. Founded with a passion for self-expression through clothing, we've created a platform where you can design and customize your own unique garments and accessories that truly represent your personality.</p>
               <p>Our mission is to empower customers to break free from mass-produced fashion by offering intuitive design tools, high-quality materials, and expert craftsmanship that brings your creative vision to life.</p>
               <ul class="social-icons">
                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>

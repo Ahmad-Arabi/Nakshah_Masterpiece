@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap"
         rel="stylesheet">
 
-    <title>Nakshah</title>
+    <title>{{env('APP_NAME')}} | @yield('page_title')</title>
     <link rel="icon" href="/images/favicon.png" type="image/x-icon">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
 
@@ -85,10 +85,10 @@
                 <div class="col-md-4">
                     <div class="footer-about">
                         <div class="brand">
-                            <img src="{{ asset('images/Arlogo.png') }}" alt="Nakshah Logo" class="img-thumbnail logo">
-                            <h4>نقشة <span>Nakshah</span></h4>
+                            <img src="{{ asset('images/Arlogo.png') }}" alt="Naqsha Logo" class="img-thumbnail logo">
+                            <h4>{{env('APP_NAME_AR')}} <span>{{env('APP_NAME')}}</span></h4>
                         </div>
-                        <p>Nakshah is your premier destination for authentic Arabic art and calligraphy. Discover
+                        <p>{{env('APP_NAME')}} is your premier destination for authentic Arabic art and calligraphy. Discover
                             handcrafted treasures that blend traditional artistry with modern design.</p>
                         <ul class="social-icons">
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -115,13 +115,13 @@
                         <div class="contact-info">
                             <p><i class="fa fa-map-marker"></i> Amman, Jordan</p>
                             <p><i class="fa fa-phone"></i> +962 78 757 9985</p>
-                            <p><i class="fa fa-envelope"></i> info@nakshah.com</p>
+                            <p><i class="fa fa-envelope"></i> {{env('MAIL_FROM_ADDRESS')}}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="inner-content">
-                        <p>Copyright &copy; {{ date('Y') }} Nakshah. All rights reserved.</p>
+                        <p>Copyright &copy; {{ date('Y') }} {{env('APP_NAME')}}. All rights reserved.</p>
                     </div>
                 </div>
             </div>

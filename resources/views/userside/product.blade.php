@@ -1,6 +1,7 @@
+@section('page_title', $product->name)
 <x-app-layout>
     <div class="product-detail-page">
-        <div class="container mt-2 mb-5 ">
+        <div class="container mt-4 mb-5 ">
             <div class="breadcrumb-section mb-2">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -17,11 +18,24 @@
             </div>
 
             <div class="product-main-content ">
+                @if (session('success'))
+                    <div class="toast align-items-center text-white toast-cart border-0 position-fixed bottom-0 start-50 translate-middle-x"
+                        role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                {{ session('success') }}
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                aria-label="Close"></button>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="row  nav-color-change">
                     <!-- Product Images Column -->
-                    <div class="col-md-6 mb-md-4">
-                        <div class="product-image-gallery p-3 rounded shadow-sm bg-white">
-                            <div class="product-carousel owl-carousel">
+                    <div class="col-md-5 mb-md-4">
+                        <div class="product-image-gallery p-3 rounded shadow-sm bg-white ">
+                            <div class="product-carousel owl-carousel ">
                                 @if ($product->thumbnail)
                                     <div class="item">
                                         <img src="{{ asset('storage/' . $product->thumbnail) }}"
@@ -48,7 +62,7 @@
                             </div>
 
                             <div class="product-thumbnails row mt-3 w-50 d-none d-md-flex">
-                            @if ($product->thumbnail && $product->image1 || $product->thumbnail && $product->image2)
+                                @if (($product->thumbnail && $product->image1) || ($product->thumbnail && $product->image2))
                                     <div class="col-4 col-md-3">
                                         <div class="thumbnail-item active" data-index="0">
                                             <img src="{{ asset('storage/' . $product->thumbnail) }}" alt="Thumbnail"
@@ -122,11 +136,11 @@
                                 </div>
                             </div>
 
-                            @if(session('error'))
-                            <div class="alert alert-danger mt-3">
-                                {{ session('error') }}
-                            </div>
-                        @endif
+                            @if (session('error'))
+                                <div class="alert alert-danger mt-3">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
 
                             @if ($product->description)
                                 <div class="product-description mt-3">
@@ -134,7 +148,8 @@
                                 </div>
                             @endif
 
-                            <form class="product-customize-form mt-4" action="{{ route('cart.add') }}" method="POST" enctype="multipart/form-data">
+                            <form class="product-customize-form mt-4" action="{{ route('cart.add') }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
 
@@ -174,22 +189,17 @@
 
                                 <div class="form-group mt-3 custom-text-options">
                                     <label for="custom-text-input">Your Custom Text:</label>
-                                    <input type="text" class="form-control" id="custom-text-input" name="custom_text"
-                                        placeholder="Enter your text here">
+                                    <input type="text" class="form-control" id="custom-text-input"
+                                        name="custom_text" placeholder="Enter your text here">
 
                                     <div class="text-color-options mt-2">
                                         <label>Text Color:</label>
                                         <div class="color-picker d-flex flex-wrap">
-                                            <span class="color-swatch color-black"
-                                                data-color="#000000"></span>
-                                            <span class="color-swatch color-white border"
-                                                data-color="#ffffff"></span>
-                                            <span class="color-swatch color-red"
-                                                data-color="#ff0000"></span>
-                                            <span class="color-swatch color-blue"
-                                                data-color="#0000ff"></span>
-                                            <span class="color-swatch color-yellow"
-                                                data-color="#ffff00"></span>
+                                            <span class="color-swatch color-black" data-color="#000000"></span>
+                                            <span class="color-swatch color-white border" data-color="#ffffff"></span>
+                                            <span class="color-swatch color-red" data-color="#ff0000"></span>
+                                            <span class="color-swatch color-blue" data-color="#0000ff"></span>
+                                            <span class="color-swatch color-yellow" data-color="#ffff00"></span>
                                         </div>
                                         <input type="hidden" name="text_color" id="selected-text-color"
                                             value="#000000">
@@ -199,9 +209,11 @@
                                 <div class="form-group mt-3 custom-image-options d-none">
                                     <label for="custom-image-input">Upload Your Image:</label>
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="custom-image-input" name="custom_image">
+                                        <input type="file" class="custom-file-input" id="custom-image-input"
+                                        name="custom_image">
                                         <label class="custom-file-label" for="custom-image-input">Choose file</label>
                                     </div>
+                                    <small id="image_alert" class="text-danger mb-5 d-none">*Image size is larger than 2MB, please select a different image.</small>
                                     <small class="form-text text-muted">Max file size: 2MB. Supported formats: JPG,
                                         PNG</small>
                                 </div>
@@ -220,7 +232,7 @@
                                                     class="form-check-label {{ $productSize->stock <= 0 ? 'text-muted' : '' }}"
                                                     for="size-{{ $productSize->size }}">
                                                     {{ $productSize->size }}
-                                                    @if($productSize->stock <= 0)
+                                                    @if ($productSize->stock <= 0)
                                                         <small class="text-danger oos">(Out of stock)</small>
                                                     @endif
                                                 </label>
@@ -234,8 +246,8 @@
                                         <label>Quantity:</label>
                                         <div class="quantity-input">
                                             <button type="button" class="quantity-btn quantity-decrease">-</button>
-                                            <input type="number" class="quantity-field" name="quantity" value="1" min="1"
-                                                max="10">
+                                            <input type="number" class="quantity-field" name="quantity"
+                                                value="1" min="1" max="10">
                                             <button type="button" class="quantity-btn quantity-increase">+</button>
                                         </div>
                                     </div>
@@ -244,12 +256,19 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group mt-4">
-                                    <button type="submit" class="add-to-cart-btn btn btn-primary cart-btn">
+                                <input id="action_type" type="hidden" name="action_type" value="addToCart">
+
+                                <div class="form-group mt-4 d-flex justify-content-between gap-3">
+                                    <button id="addToCart" type="submit"
+                                        class="add-to-cart-btn btn btn-primary cart-btn">
                                         <i class="fa fa-shopping-cart"></i> Add to Cart
                                     </button>
+                                    <button id="buyNow" type="submit"
+                                        class="add-to-cart-btn btn btn-primary buy-btn">
+                                        <i class="fa fa-credit-card"></i> Buy Now
+                                    </button>
                                 </div>
-                                
+
                             </form>
                         </div>
                     </div>
@@ -285,14 +304,15 @@
                     @endif
                     <div class="tab-pane fade {{ !$product->description ? 'show active' : '' }}" id="reviews"
                         role="tabpanel" aria-labelledby="reviews-tab">
-                        <a href="{{ route('product.review.create', $product->id) }}" class="btn btn-primary cancel-btn mx-2 mt-2">
+                        <a href="{{ route('product.review.create', $product->id) }}"
+                            class="btn btn-primary cancel-btn mx-2 mt-2">
                             <i class="fa fa-pencil" aria-hidden="true"></i> Write a Review
                         </a>
                         <div class="p-4">
                             <h4>Customer Reviews</h4>
                             @if ($approvedReviews->count() > 0)
                                 <div class="reviews-list">
-                         
+
                                     @foreach ($approvedReviews as $review)
                                         <div class="review-item mb-4 pb-3 border-bottom">
                                             <div class="review-header d-flex justify-content-between">
@@ -348,7 +368,7 @@
                                         {{ $relatedProduct->category->name }}
                                     </a>
                                 @endif
-                                
+
                                 @php
                                     $relatedReviews = $relatedProduct->reviews->where('is_approved', 1);
                                     $relatedReviewCount = $relatedReviews->count();
@@ -374,13 +394,14 @@
                                     </ul>
                                     <span class="review-count">({{ $relatedReviewCount }})</span>
                                 </div>
-                                
+
                                 <div class="price-small mt-1">{{ $relatedProduct->price }} JOD</div>
-                                
-                                @if($relatedProduct->colors)
+
+                                @if ($relatedProduct->colors)
                                     <div class="color-info mt-2">
-                                        @foreach(explode(',', $relatedProduct->colors) as $color)
-                                            <span class="color-dot" style="background-color: {{ $color }}"></span>
+                                        @foreach (explode(',', $relatedProduct->colors) as $color)
+                                            <span class="color-dot"
+                                                style="background-color: {{ $color }}"></span>
                                         @endforeach
                                     </div>
                                 @endif
@@ -397,153 +418,157 @@
         </div>
     </div>
     <!-- Modal Structure -->
-<div class="modal fade" id="fileSizeModal" tabindex="-1" aria-labelledby="fileSizeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="fileSizeModalLabel">File Size Error</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                File size exceeds the 2MB limit. Please choose a smaller file.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Okay</button>
+    <div class="modal fade" id="fileSizeModal" tabindex="-1" aria-labelledby="fileSizeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fileSizeModalLabel">File Size Error</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    File size exceeds the 2MB limit. Please choose a smaller file.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Okay</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     @push('styles')
-    <link rel="stylesheet" href="{{ asset('user/css/product.css') }}">
+        <link rel="stylesheet" href="{{ asset('user/css/product.css') }}">
     @endpush
-    
+    <script src="{{ asset('/user/js/cart_options.js') }}"></script>
     @push('scripts')
-    <script>
-        $(document).ready(function() {
-            // Initialize product image carousel
-            var productCarousel = $('.product-carousel').owlCarousel({
-                items: 1,
-                loop: true,
-                margin: 0,
-                autoplay: true,
-                autoplayTimeout: 3000,
-                autoplayHoverPause: true,
-                loop: true,
-                dots: false,
-                nav: true,
-                navText: [
-                    '<i class="fa fa-angle-left"></i>',
-                    '<i class="fa fa-angle-right"></i>'
-                ]
-            });
-            
-            // Thumbnail click handler
-            $('.thumbnail-item').on('click', function() {
-                var index = $(this).data('index');
-                productCarousel.trigger('to.owl.carousel', [index, 300]);
-                $('.thumbnail-item').removeClass('active');
-                $(this).addClass('active');
-            });
-            
-            // Update active thumbnail when carousel changes
-            productCarousel.on('changed.owl.carousel', function(event) {
-                var index = event.item.index;
-                $('.thumbnail-item').removeClass('active');
-                $('.thumbnail-item[data-index="' + index + '"]').addClass('active');
-            });
-            
-            // Related products carousel
-            $('.related-products-carousel').owlCarousel({
-                loop: true,
-                margin: 15,
-                nav: true,
-                autoplay: true,
-                loop: true,
-                autoplayTimeout: 3000,
-                autoplayHoverPause: true,
-                navText: [
-                    '<i class="fa fa-angle-left"></i>',
-                    '<i class="fa fa-angle-right"></i>'
-                ],
-                dots: false,
-                responsive: {
-                    0: {
-                        items: 1,
-                        stagePadding: 25
-                        
-                    },
-                    576: {
-                        items: 2
-                    },
-                    768: {
-                        items: 2
-                    },
-                    992: {
-                        items: 4
+        <script>
+            $(document).ready(function() {
+                // Initialize product image carousel
+                var productCarousel = $('.product-carousel').owlCarousel({
+                    items: 1,
+                    loop: true,
+                    margin: 0,
+                    autoplay: true,
+                    autoplayTimeout: 3000,
+                    autoplayHoverPause: true,
+                    loop: true,
+                    dots: false,
+                    nav: true,
+                    navText: [
+                        '<i class="fa fa-angle-left"></i>',
+                        '<i class="fa fa-angle-right"></i>'
+                    ]
+                });
+
+                // Thumbnail click handler
+                $('.thumbnail-item').on('click', function() {
+                    var index = $(this).data('index');
+                    productCarousel.trigger('to.owl.carousel', [index, 300]);
+                    $('.thumbnail-item').removeClass('active');
+                    $(this).addClass('active');
+                });
+
+                // Update active thumbnail when carousel changes
+                productCarousel.on('changed.owl.carousel', function(event) {
+                    var index = event.item.index;
+                    $('.thumbnail-item').removeClass('active');
+                    $('.thumbnail-item[data-index="' + index + '"]').addClass('active');
+                });
+
+                // Related products carousel
+                $('.related-products-carousel').owlCarousel({
+                    loop: true,
+                    margin: 15,
+                    nav: true,
+                    autoplay: true,
+                    loop: true,
+                    autoplayTimeout: 3000,
+                    autoplayHoverPause: true,
+                    navText: [
+                        '<i class="fa fa-angle-left"></i>',
+                        '<i class="fa fa-angle-right"></i>'
+                    ],
+                    dots: false,
+                    responsive: {
+                        0: {
+                            items: 1,
+                            stagePadding: 25
+
+                        },
+                        576: {
+                            items: 2
+                        },
+                        768: {
+                            items: 2
+                        },
+                        992: {
+                            items: 4
+                        }
                     }
-                }
+                });
+
+                // Toggle customization options based on selection
+                $('input[name="customization_type"]').on('change', function() {
+                    var selected = $(this).val();
+                    if (selected === 'text') {
+                        $('.custom-text-options').removeClass('d-none').show();
+                        $('.custom-image-options').addClass('d-none').hide();
+                    } else {
+                        $('.custom-text-options').addClass('d-none').hide();
+                        $('.custom-image-options').removeClass('d-none').show();
+                    }
+                });
+
+                // Color selection
+                $('.color-option').on('click', function() {
+                    $('.color-option').removeClass('selected');
+                    $(this).addClass('selected');
+                    $('#selected-color').val($(this).data('color'));
+                });
+
+                // Text color selection
+                $('.color-swatch').on('click', function() {
+                    $('.color-swatch').removeClass('selected');
+                    $(this).addClass('selected');
+                    $('#selected-text-color').val($(this).data('color'));
+                });
+
+                // Quantity selection
+                $('.quantity-decrease').on('click', function() {
+                    var input = $(this).siblings('.quantity-field');
+                    var value = parseInt(input.val());
+                    if (value > 1) {
+                        input.val(value - 1);
+                    }
+                });
+
+                $('.quantity-increase').on('click', function() {
+                    var input = $(this).siblings('.quantity-field');
+                    var value = parseInt(input.val());
+                    var max = parseInt(input.attr('max'));
+                    if (value < max) {
+                        input.val(value + 1);
+                    }
+                });
+
+                // File input label update
+                $('#custom-image-input').on('change', function() {
+                    var fileName = $(this).val().split('\\').pop();
+                    $(this).siblings('.custom-file-label').addClass('selected').html(fileName || 'Choose file');
+
+                    // Validate file size
+                    var alertElem = $('#image_alert');
+                    if (this.files[0] && this.files[0].size > 2 * 1024 * 1024) {
+                        alertElem.removeClass('d-none').show();
+                        $(this).val('');
+                        $(this).siblings('.custom-file-label').html('Choose file');
+                    } else {
+                        alertElem.addClass('d-none').hide();
+                    }
+                });
             });
-            
-            // Toggle customization options based on selection
-            $('input[name="customization_type"]').on('change', function() {
-                var selected = $(this).val();
-                if (selected === 'text') {
-                    $('.custom-text-options').removeClass('d-none').show();
-                    $('.custom-image-options').addClass('d-none').hide();
-                } else {
-                    $('.custom-text-options').addClass('d-none').hide();
-                    $('.custom-image-options').removeClass('d-none').show();
-                }
-            });
-            
-            // Color selection
-            $('.color-option').on('click', function() {
-                $('.color-option').removeClass('selected');
-                $(this).addClass('selected');
-                $('#selected-color').val($(this).data('color'));
-            });
-            
-            // Text color selection
-            $('.color-swatch').on('click', function() {
-                $('.color-swatch').removeClass('selected');
-                $(this).addClass('selected');
-                $('#selected-text-color').val($(this).data('color'));
-            });
-            
-            // Quantity selection
-            $('.quantity-decrease').on('click', function() {
-                var input = $(this).siblings('.quantity-field');
-                var value = parseInt(input.val());
-                if (value > 1) {
-                    input.val(value - 1);
-                }
-            });
-            
-            $('.quantity-increase').on('click', function() {
-                var input = $(this).siblings('.quantity-field');
-                var value = parseInt(input.val());
-                var max = parseInt(input.attr('max'));
-                if (value < max) {
-                    input.val(value + 1);
-                }
-            });
-            
-            // File input label update
-            $('#custom-image-input').on('change', function() {
-                var fileName = $(this).val().split('\\').pop();
-                $(this).siblings('.custom-file-label').addClass('selected').html(fileName || 'Choose file');
-                
-                // Validate file size
-                if (this.files[0] && this.files[0].size > 2 * 1024 * 1024) {
-                    alert('File size exceeds 2MB limit.');
-                    $(this).val('');
-                    $(this).siblings('.custom-file-label').html('Choose file');
-                }
-            });
-        });
-    </script>
+        </script>
     @endpush
 </x-app-layout>

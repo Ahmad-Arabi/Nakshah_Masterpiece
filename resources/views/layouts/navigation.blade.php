@@ -2,8 +2,8 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
-                <img src="{{ asset('images/Arlogo.png') }}" alt="Nakshah Logo" class="img-fluid nav-logo">
-                <h2>نقشة <em>Nakshah</em></h2></a>
+                <img src="{{ asset('images/Arlogo.png') }}" alt="Naqsha Logo" class="img-fluid nav-logo">
+                <h2>{{env('APP_NAME_AR')}} <em>{{env('APP_NAME')}}</em></h2></a>
             <div class="d-flex align-items-center d-lg-none">
                 @auth
                 <a href="{{ route('cart.index') }}" class="cart-icon-mobile">
@@ -137,4 +137,14 @@
             </div>
         </div>
     </nav>
+    <!-- Banner Ends Here -->
+        <div class="container-fluid mx-0 px-0">
+            <div class="owl-carousel coupons-carousel">
+              @foreach ($featuredCoupons as $coupon)
+                <div class="coupon-item"> Use Code <span class="coupon">{{ $coupon->code }}</span> for <span class="discount">{{ $coupon->discount }}</span> off for your next order! </div>
+
+              @endforeach
+              <div class="coupon-item"> Get free shipping on orders over 50 JOD !</div>
+            </div>
+        </div>
 </header>
