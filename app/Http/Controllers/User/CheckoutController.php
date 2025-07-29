@@ -117,6 +117,14 @@ class CheckoutController extends Controller
         
         if (!$coupon) {
             return back()->with('error', 'Invalid or expired coupon code.');
+        }  else if ($coupon) {
+
+        // Check if the coupon is already applied
+        if ( Order::where('user_id', Auth::id())
+            ->where('coupon_id', $coupon->id)
+            ->exists()) {
+            return back()->with('error', 'You have already used this coupon.');
+
         }
         
         // Get user-specific cart items
@@ -146,6 +154,10 @@ class CheckoutController extends Controller
         ]]);
         
         return back()->with('success', 'Coupon applied successfully!');
+        
+        } 
+
+
     }
     
     /**
