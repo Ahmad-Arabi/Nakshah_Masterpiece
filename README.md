@@ -1,6 +1,6 @@
-# 🧵 Nakshah (نقشة) – Personalized Product eCommerce Platform
+# 🧵 Naqsha (نقشة) – Personalized Product eCommerce Platform
 
-Welcome to **Nakshah**, a Laravel-powered eCommerce platform that empowers creatives and individuals in Jordan to design and order custom-printed merchandise 🧢👕📦.
+Welcome to **Naqsha**, a Laravel-powered eCommerce platform that empowers creatives and individuals in Jordan to design and order custom-printed merchandise 🧢👕📦.
 
 ---
 
